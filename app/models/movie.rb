@@ -62,9 +62,9 @@ class Movie < ActiveRecord::Base
   acts_as_taggable
   
   #named scopes
-  named_scope :sitemap, :select => 'id, title, released_at, created_at, updated_at', :order => "updated_at DESC", :limit => 1999 # +1 for About page to make 50,000
+  scope :sitemap, :select => 'id, title, released_at, created_at, updated_at', :order => "updated_at DESC", :limit => 1999 # +1 for About page to make 50,000
 
-  named_scope :from_named_genre,
+  scope :from_named_genre,
               lambda{|genre_name|
                 { :conditions => {:movie_genres=>{:genres=>{:name => genre_name}}},
                   :joins      => {:movie_genres=>:genre},
@@ -72,47 +72,47 @@ class Movie < ActiveRecord::Base
                 }
               }
 
-  named_scope :from_director,
+  scope :from_director,
               lambda {|director_id|
                 { :conditions => {:movie_directors=>{:director_id => director_id}},
                   :joins      => {:movie_directors=>:director}
                 }
               }
 
-  named_scope :from_writer,
+  scope :from_writer,
               lambda {|writer_id|
                 { :conditions => {:movie_writers=>{:writer_id => writer_id}},
                   :joins      => {:movie_writers=>:writer}
                 }
               }
 
-  named_scope :from_actor,
+  scope :from_actor,
               lambda {|actor_id|
                 { :conditions => {:movie_characters=>{:actor_id => actor_id}},
                   :joins      => {:movie_characters=>:actor}
                 }
               }
 
-  named_scope :from_country,
+  scope :from_country,
               lambda { |country_id|
                 { :conditions => {:country_id => country_id}
                 }
               }
 
-  named_scope :from_studio,
+  scope :from_studio,
               lambda { |studio_id|
                 { :conditions => {:studio_id => studio_id}
                 }
               }
 
-  named_scope :on_theatres,
+  scope :on_theatres,
               :select     => 'distinct movies.*',
               :conditions =>  "DATEDIFF(schedules.created_at,(select schedules.created_at from schedules order by created_at desc limit 1)) = 0",
               :joins      => :schedules,
               :order => "schedules.id DESC"
 
 
-  named_scope :recommended,
+  scope :recommended,
               lambda {|limit|
                 limit ||= 5
                 { :limit=>limit,
@@ -120,17 +120,17 @@ class Movie < ActiveRecord::Base
                 }
               }
 
-  named_scope :tagged_with,
+  scope :tagged_with,
               lambda { |tags|
                 Movie.find_options_for_find_tagged_with(tags, :match_all => true)
               }
     
-  named_scope :last_updated,
+  scope :last_updated,
               lambda {|limit|
                 {:order => "updated_at DESC", :limit => limit}
               }
 
-  named_scope :with_trailer, :conditions => 'trailers is not null and trailers not like ""'
+  scope :with_trailer, :conditions => 'trailers is not null and trailers not like ""'
     
   after_save :update_plain_fields
   

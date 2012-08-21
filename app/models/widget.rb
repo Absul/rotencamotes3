@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Widget < ActiveRecord::Base
 
   # valid post types

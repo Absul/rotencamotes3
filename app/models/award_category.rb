@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class AwardCategory < ActiveRecord::Base
   has_many :awards, :foreign_key => "category_id"
   validates_presence_of :name

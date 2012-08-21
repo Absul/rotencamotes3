@@ -1,9 +1,0 @@
-en:
-  devise:
-    sessions:
-      oauth2_invalid: "No se pudo iniciar sesión. Cuenta inválida."
-      oauth2_timeout: "La sesión expiró. Por favor intente de nuevo."
-      oauth2_authenticity_token: "Imposible iniciar sesión"
-      oauth2_actions:
-        sign_in: "Entrar" # NOTE: Not used for the default Facebook Connect button.
-        sign_out: "Salir"

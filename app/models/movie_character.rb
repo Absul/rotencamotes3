@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class MovieCharacter < ActiveRecord::Base
   # relationships
   belongs_to              :movie
@@ -10,14 +11,14 @@ class MovieCharacter < ActiveRecord::Base
   # validates_uniqueness_of :character_name, :scope => :movie_id
 
   # named scopes
-  named_scope :from_movie,
+  scope :from_movie,
               lambda  { |movie_id|  {
                   :conditions =>  { :movie_id  =>  movie_id },
                   :order      =>  'character_name DESC'
                 }
               }
 
-  named_scope :from_actor,
+  scope :from_actor,
               lambda  { |person_id|  {
                   :conditions =>  { :person_id  =>  person_id },
                   :order      =>  'character_name DESC'

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class MovieChain < ActiveRecord::Base
   has_attached_file :logo, :styles => { :small => "32x32>", :medium => "300x300>", :thumb => "100x100>" }
   has_many :theatres, :dependent => :destroy

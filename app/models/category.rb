@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Category < ActiveRecord::Base
   has_many :blogs
   has_many :post_categories
@@ -12,7 +13,7 @@ class Category < ActiveRecord::Base
   }
   #TODO: Review default value for category_type
 
-  named_scope :with_posts,
+  scope :with_posts,
       :conditions => 'id in (select distinct category_id from post_categories)',
       :order      => 'name'
 

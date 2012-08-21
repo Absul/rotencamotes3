@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class ExternalLink < ActiveRecord::Base
   has_many :assets, :as => :attachable
   validates_presence_of :title

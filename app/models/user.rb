@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class User < ActiveRecord::Base
 
   has_attached_file :avatar, :styles => { :thumb => "100x100>", :banner => "150x222#", :medium => "300x300>", :thumb => "100x100>", :avatar => "64x64#" }, :storage => :s3,
@@ -27,7 +28,8 @@ class User < ActiveRecord::Base
 
   # record_activity_of :user, :actions => [:create, :update]
 
-  devise  :registerable, :database_authenticatable,:recoverable,:rememberable, :trackable, :validatable,:oauth2_authenticatable
+  devise  :registerable, :database_authenticatable,:recoverable,:rememberable, :trackable, :validatable, :omniauthable
+          #,:oauth2_authenticatable
 
   ROLES = {
     :admins     => 'admins',
@@ -35,11 +37,11 @@ class User < ActiveRecord::Base
     :experts    => 'experts'
   }
 
-  named_scope :community, :conditions =>  { :member_of => ROLES[:community] }
-  named_scope :experts,   :conditions =>  { :member_of => ROLES[:experts]   }
-  named_scope :admins,   :conditions =>  { :member_of => ROLES[:admins]   }
+  scope :community, :conditions =>  { :member_of => ROLES[:community] }
+  scope :experts,   :conditions =>  { :member_of => ROLES[:experts]   }
+  scope :admins,   :conditions =>  { :member_of => ROLES[:admins]   }
 
-  named_scope :members_of, lambda { |role| {:conditions => "member_of_mask & #{2**User.roles_list.index(role.to_s)} > 0"} }
+  scope :members_of, lambda { |role| {:conditions => "member_of_mask & #{2**User.roles_list.index(role.to_s)} > 0"} }
 
   def self.community
     User.members_of(ROLES[:community])

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Visit < ActiveRecord::Base
 
   def self.track_visit(request)
@@ -16,12 +17,12 @@ class Visit < ActiveRecord::Base
     }) 
   end
 
-  named_scope :for_blog,
+  scope :for_blog,
                 lambda{ |blog_id|{
                   :conditions => {:resource_id => blog_id, :controller => 'blogs'},
                   :order => 'created_at DESC'}
                 }
-  named_scope :for_post,
+  scope :for_post,
                 lambda{ |post_id| {
                   :conditions => {:resource_id => post_id, :controller => 'posts'},
                   :order => 'created_at DESC'

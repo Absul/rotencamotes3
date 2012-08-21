@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Item < ActiveRecord::Base
 
   # relationships
@@ -12,16 +13,16 @@ class Item < ActiveRecord::Base
   acts_as_list  :scope => :list
   
   # named scopes
-  named_scope :from_list,
+  scope :from_list,
     lambda { |list_id| {
         :conditions => {:list_id => list_id},
         :order => 'position'
       }
     }
   
-  named_scope :of_movies, :conditions => {:listable_type => "Movie"}
+  scope :of_movies, :conditions => {:listable_type => "Movie"}
 
-  named_scope :from_movie,
+  scope :from_movie,
     lambda { |movie_id|{
       :conditions => {:listable_id => movie_id, :listable_type => "Movie"}
       }

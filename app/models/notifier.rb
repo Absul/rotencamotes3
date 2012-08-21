@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Notifier < ActionMailer::Base
   # default :from => "sender_email_id"
 

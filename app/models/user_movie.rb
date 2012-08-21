@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class UserMovie < ActiveRecord::Base
   
   belongs_to :user

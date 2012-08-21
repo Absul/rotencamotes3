@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'nokogiri'
 require 'action_view'
 
@@ -25,8 +26,14 @@ class Post < ActiveRecord::Base
                   :cached_tag_list, :comments_count, :visits_count, :headlines, :status
 
   # permalink config
-  has_permalink :title, :update => true,
-                :if => Proc.new { |post| post.nil? or post.permalink.blank? }
+  # has_permalink :title, :update => true,
+  #               :if => Proc.new { |post| post.nil? or post.permalink.blank? }
+
+  before_save :update_permalink
+
+  def update_permalink
+    self.permalink ||= self.title.parameterize
+  end
 
   # valid post types
   STATUSES = {
@@ -36,57 +43,57 @@ class Post < ActiveRecord::Base
   }
 
   #named scopes
-  named_scope :sitemap, :select => 'id, permalink, title, created_at, updated_at',
+  scope :sitemap, :select => 'id, permalink, title, created_at, updated_at',
               :limit => 29999 # +1 for About page to make 50,000
-  named_scope :drafted,
+  scope :drafted,
               :conditions => { :status => STATUSES[:drafted] },
               :order => 'drafted_at DESC'
-  named_scope :published,
+  scope :published,
               :conditions => { :status => STATUSES[:published] },
               :order => 'published_at DESC'
 
-  named_scope :reviewed,
+  scope :reviewed,
               :conditions => { :status => STATUSES[:reviewed] },
               :order => 'reviewed_at DESC'
-  named_scope :active,
+  scope :active,
               :conditions => { :blogs => {:active => true}},
               :joins => :blog
-  named_scope :last_published,
+  scope :last_published,
               lambda {|limit| limit = 20 if limit.nil?
                       {:order =>  'created_at DESC',
                        :conditions => ["status like ? and published_at <= ?",STATUSES[:published],Time.zone.now],
                        :limit => limit
                      }
                }
-  named_scope :most_commented,
+  scope :most_commented,
               lambda {|limit| limit = 20 if limit.nil?
                       {:order =>  'comments_count DESC',
                        :conditions => { :status => STATUSES[:published] },
                        :limit => limit
                      }
                }
-  named_scope :most_visited,
+  scope :most_visited,
               lambda {|limit| limit = 20 if limit.nil?
                       {:order =>  'visits_count DESC',
                        :conditions => { :status => STATUSES[:published] },
                        :limit => limit
                      }
                }
-  named_scope :next_from,
+  scope :next_from,
               lambda { |limit,offset|
                       { :order => 'published_at DESC',
                         :limit => limit,
                         :offset => offset
                       }
               }
-  named_scope :from_category,
+  scope :from_category,
               lambda { |category_id|
                       { :order => 'published_at DESC',
                         :conditions =>{:category_id => category_id}
                       }
               }
 
-  named_scope :from_named_category,
+  scope :from_named_category,
               lambda { |category_permalink|
                       { :conditions =>{:post_categories => {:categories => {:name => category_permalink.titleize}}},
                         :joins => {:post_categories=>:category}
@@ -94,20 +101,20 @@ class Post < ActiveRecord::Base
 
               }
 
-  named_scope :from_blog_with_category,
+  scope :from_blog_with_category,
               lambda { |category_permalink|
                       { :conditions =>{:categories => {:permalink => category_permalink}},
                         :joins => {:blog=>:category}
                       }
               }
 
-  named_scope :from_blog_with_named_category,
+  scope :from_blog_with_named_category,
               lambda { |category_permalink|
                       { :conditions => {:blog => {:categories=>{:permalink => category_permalink}}},
                         :joins => {:blog=>:category}
                       }
               }
-  named_scope :tagged_with,
+  scope :tagged_with,
               lambda { |tags|
                 Post.find_options_for_find_tagged_with(tags, :match_all => true)
               }
@@ -119,14 +126,14 @@ class Post < ActiveRecord::Base
   acts_as_taggable
 
   #define included attributes for thinking-sphinx indexing
-  define_index do
-    indexes title, :sortable => true
-    indexes content
-    indexes permalink, :sortable => true
-    indexes cached_tag_list
-    has user_id, created_at, updated_at, blog_id
-    set_property :delta => true
-  end
+  # define_index do
+  #   indexes title, :sortable => true
+  #   indexes content
+  #   indexes permalink, :sortable => true
+  #   indexes cached_tag_list
+  #   has user_id, created_at, updated_at, blog_id
+  #   set_property :delta => true
+  # end
 
   # Status update
   def setup_to_mark_as_drafted

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class BlogImage < ActiveRecord::Base
   belongs_to :blog
   validates_presence_of :image_file_name

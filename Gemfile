@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.16'
+gem 'rails', '~>3.1.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -30,13 +30,15 @@ gem 'sqlite3'
 #   gem 'webrat'
 # end
 
-
-gem "paperclip", "~> 2.7.0"
+gem "aws-sdk"
+gem "paperclip", "~> 3.0.0"
 gem 'acts_as_list'
-gem 'thinking-sphinx', '~>2.0.12'
+gem 'thinking-sphinx', '~>2.0.13'
 gem 'mapper'
-gem 'devise', '~> 1.5.0'
+gem 'devise', "~>2.0.0" #, '~> 1.5.0'
 gem 'oauth2'
+gem 'omniauth-facebook'
+
 # gem 'warden'
 # 
 # gem 'formtastic', '~> 1.1.0'

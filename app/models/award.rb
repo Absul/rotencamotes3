@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class Award < ActiveRecord::Base
   belongs_to :institution,  :class_name => "AwardInstitution",  :foreign_key => "institution_id"
   belongs_to :category,     :class_name => "AwardCategory",     :foreign_key => "category_id"
@@ -13,28 +15,28 @@ class Award < ActiveRecord::Base
   }
 
   # named scopes
-  named_scope :from_institution,
+  scope :from_institution,
               lambda { |institution_id|
                 { :conditions => { :institution_id => institution_id }
                 }
               }
-  named_scope :from_category,
+  scope :from_category,
               lambda {  |category_id|
                 {
                   :conditions => { :category_id => category_id }
                 }
               }
-  named_scope :from_person,
+  scope :from_person,
               lambda {  |person_id|
                 { :conditions => { :person_id => person_id }
                 }
               }
-  named_scope :from_movie,
+  scope :from_movie,
               lambda {
                 { :conditions => { :movie_id => movie_id }
                 }
               }
-  named_scope :from_intitution_in_year,
+  scope :from_intitution_in_year,
               lambda  { |institution_id, year_received|
                 { :conditions =>  { :institution_id => institution_id,
                                     :year_received  =>  year_received }

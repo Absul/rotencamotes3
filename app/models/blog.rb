@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class Blog < ActiveRecord::Base
   # relationships
   has_many              :blog_images
@@ -6,25 +8,32 @@ class Blog < ActiveRecord::Base
   belongs_to            :user
   validates_presence_of :name
   # permalink based on :name
-  has_permalink         :name, :update => true, :if => Proc.new { |blog| blog.permalink.blank? }
+  # has_permalink         :name, :update => true, :if => Proc.new { |blog| blog.permalink.blank? }
+  before_save :update_permalink
+
+  def update_permalink
+    self.permalink ||= self.name.parameterize
+  end
+
+
   # attached :banner config
   has_attached_file     :banner, :styles => {:thumbnail =>"270x50", :large => "741x120>#"}, :storage => :s3,
                     :s3_credentials => { :access_key_id => "1B7JJ1RZXMZP7VQADY02" , :secret_access_key =>"8UvZq1RtsyE72t0vq2U1FaaZStGXm9fj87uFub2b" },
                     :path => "system/:attachment/:id/:style/:basename.:extension",
                     :bucket => lambda { |attachment| i = attachment.instance.id;  i = (i ? i % 4 : 0) ;"assets#{i}.votencamotes.com"}
   #named scopes
-  named_scope :active,
+  scope :active,
               :conditions => {:active => true}
-  named_scope :inactive,
+  scope :inactive,
               :conditions => {:active => false}
-  named_scope :from_named_category,
+  scope :from_named_category,
                 lambda { |category_name|
                   { :conditions =>
                     {:blog => {:categories => {:permalink => category_name}}},
                   :joins => :category
                   }
                 }
-  named_scope :most_visited,
+  scope :most_visited,
               lambda {|limit| limit = 5 if limit.nil?
                       {:order =>  'visits_count DESC',
                        :limit => limit

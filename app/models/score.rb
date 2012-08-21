@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Score < ActiveRecord::Base
   # relationships
   belongs_to              :movie
@@ -37,15 +38,15 @@ class Score < ActiveRecord::Base
 
 
   # named scopes
-  named_scope :from_other_sources, :conditions=>"other_source IS NOT NULL", :order=>"scored_at DESC"
-  named_scope :from_movie,
+  scope :from_other_sources, :conditions=>"other_source IS NOT NULL", :order=>"scored_at DESC"
+  scope :from_movie,
               lambda { |movie_id| {
                   :conditions =>  { :movie_id => movie_id },
                   :order      =>  'scored_at DESC'
                 }
               }
 
-  named_scope :from_theatre,
+  scope :from_theatre,
               lambda { |theatre_id| {
                   :conditions =>  { :theatre_id => theatre_id },
                   :order      =>  'scored_at DESC'
@@ -53,21 +54,21 @@ class Score < ActiveRecord::Base
               }
 
 
-  named_scope :with_value,
+  scope :with_value,
               lambda { |value| {
                   :conditions => {:value => value},
                   :order      => 'scored_at DESC'
                 }
               }
 
-  named_scope :with_value_greater_than,
+  scope :with_value_greater_than,
               lambda { |value| {
                   :conditions => ["value >= ?",value],
                   :order      => 'scored_at DESC'
                 }
               }
 
-  named_scope :with_value_less_than,
+  scope :with_value_less_than,
               lambda { |value| {
                   :conditions => ["value < ?",value],
                   :order      => 'scored_at DESC'
@@ -75,18 +76,18 @@ class Score < ActiveRecord::Base
               }
 
 
-  named_scope :from_user,
+  scope :from_user,
               lambda { |user_id| {
                   :conditions =>  { :user_id => user_id },
                   :order      =>  'scored_at DESC'
                 }
               }
 
-  named_scope :from_experts,
+  scope :from_experts,
               :conditions =>  { :source  => SOURCES[:experts]  },
               :order      =>  'movie_id, user_id, scored_at DESC'
 
-  named_scope :from_community,
+  scope :from_community,
               :conditions =>  { :source  => SOURCES[:community]  },
               :order      =>  'movie_id, user_id, scored_at DESC'
 

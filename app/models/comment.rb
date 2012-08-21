@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Comment < ActiveRecord::Base
   # relationships
   belongs_to :post
@@ -21,25 +22,25 @@ class Comment < ActiveRecord::Base
   record_activity_of :user, :if => Proc.new{|comment| comment.user_id }, :actions => [:create]
 
   # named scopes
-  named_scope :from_user,
+  scope :from_user,
               lambda { |user_id| {
                   :conditions =>  { :user_id => user_id },
                   :order      => 'created_at DESC'
                 }
               }
 
-  named_scope :from_post,
+  scope :from_post,
               lambda { |post_id| {
                   :conditions =>  { :post_id => post_id },
                   :order      => 'created_at DESC'
                 }
               }
 
-  named_scope :from_users, :conditions=>"comments.user_id is not null",  :order=>"created_at DESC"
-  named_scope :from_posts, :conditions=>"post_id is not null", :order=>"created_at DESC"
-  named_scope :from_movies, :conditions=>"movie_id is not null", :order=>"created_at DESC"
+  scope :from_users, :conditions=>"comments.user_id is not null",  :order=>"created_at DESC"
+  scope :from_posts, :conditions=>"post_id is not null", :order=>"created_at DESC"
+  scope :from_movies, :conditions=>"movie_id is not null", :order=>"created_at DESC"
 
-  named_scope :last_published,
+  scope :last_published,
               lambda { |limit| limit = 20 if limit.nil?
                 { :order =>  'comments.created_at DESC',
                   :include => :post,
@@ -48,7 +49,7 @@ class Comment < ActiveRecord::Base
                 }
 
               }
-  named_scope :on_posts_from_user,
+  scope :on_posts_from_user,
               lambda { |user_id| {
                   :conditions => { :posts => {:user_id => user_id }},
                   :joins      => :post

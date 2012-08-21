@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Showtime < ActiveRecord::Base
   # Relationships
   belongs_to            :schedule
@@ -14,9 +15,9 @@ class Showtime < ActiveRecord::Base
   }
 
   # named scopes
-  named_scope :active,
+  scope :active,
               :conditions =>  { :status => STATUSES[:active]  }
-  named_scope :inactive,
+  scope :inactive,
               :conditions =>  { :status => STATUSES[:inactive]  }
 
   # Methods

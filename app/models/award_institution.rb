@@ -1,4 +1,4 @@
-
+# encoding: UTF-8
 
 class AwardInstitution < ActiveRecord::Base
   has_many :awards, :foreign_key => "institution_id"

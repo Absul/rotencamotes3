@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Profile < ActiveRecord::Base
   belongs_to :user
   # belongs_to :favorite_movie, :class_name => "Movie", :foreign_key => "favorite_movie_id"

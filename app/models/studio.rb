@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Studio < ActiveRecord::Base
   has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "100x100>" }, :storage => :s3,
                     :s3_credentials => { :access_key_id => "1B7JJ1RZXMZP7VQADY02" , :secret_access_key =>"8UvZq1RtsyE72t0vq2U1FaaZStGXm9fj87uFub2b" },

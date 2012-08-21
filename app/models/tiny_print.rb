@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class TinyPrint < ActiveRecord::Base
   
   has_attached_file :image,

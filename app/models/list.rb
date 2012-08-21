@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class List < ActiveRecord::Base
   # relationships
   belongs_to  :user

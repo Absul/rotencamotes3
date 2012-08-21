@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Schedule < ActiveRecord::Base
   # relationships
   belongs_to            :theatre
@@ -14,24 +15,24 @@ class Schedule < ActiveRecord::Base
   }
 
   # named scopes
-  named_scope :active,
+  scope :active,
               :conditions =>  "DATEDIFF(created_at,(select created_at from schedules order by created_at desc limit 1)) = 0"
               
-  named_scope :inactive,
+  scope :inactive,
               :conditions =>  "DATEDIFF(created_at,(select created_at from schedules order by created_at desc limit 1)) < 0"
-  named_scope :from_theatre,
+  scope :from_theatre,
                 lambda  { |theatre_id|  {
                   :conditions =>  { :theatre_id => theatre_id },
                   :order      =>  'in_theatre_from DESC'
                 }
               }
-  named_scope :from_movie,
+  scope :from_movie,
                 lambda  { |movie_id|  {
                   :conditions =>  { :movie_id =>  movie_id  },
                   :order      =>  'in_theatre_from DESC'
                 }
               }
-  named_scope :from_movie_chain,
+  scope :from_movie_chain,
                 lambda  { |movie_chain_id|  {
                   :conditions =>  { :theatres => {  :movie_chain_id => movie_chain_id }},
                   :order      =>  'in_theatre_from DESC',

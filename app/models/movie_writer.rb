@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class MovieWriter < ActiveRecord::Base
   belongs_to :movie
   belongs_to :writer, :class_name => "Person", :foreign_key => "writer_id"

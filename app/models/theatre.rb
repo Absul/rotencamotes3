@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class Theatre < ActiveRecord::Base
   belongs_to            :movie_chain
   has_many              :schedules

@@ -1,3 +1,4 @@
+# encoding: UTF-8
 class TinyVideo < ActiveRecord::Base
   
   has_attached_file :original, :storage => :s3,
