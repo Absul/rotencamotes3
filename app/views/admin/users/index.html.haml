@@ -1,0 +1,46 @@
+#content
+  #community.widget
+    .top
+    .middle
+      %h3 Comunidad
+      %table.data
+        - User.community.each do |user|
+          %tr
+            %td= h link_to user.name, user
+            %td= h user.email
+            %td= link_to 'Editar', edit_admin_user_path(user), :class => "edit"
+            %td= link_to 'Eliminar', [:admin, user], :confirm => 'Estás seguro?', :method => :delete, :class => "delete"
+    .bottom
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Accciones
+      %p
+        = link_to 'Nuevo usuario', new_admin_user_path
+    .bottom
+  #experts.widget
+    .top
+    .middle
+      %h3 Expertos
+      %table.data
+        %tr
+        - User.experts.each do |user|
+          %tr
+            %td= h link_to user.name, user
+            %td= link_to 'Editar', edit_admin_user_path(user), :class => "edit"
+            %td= link_to 'Eliminar', [:admin, user], :confirm => 'Estás seguro?', :method => :delete, :class => "delete"
+    .bottom
+  #admins.widget
+    .top
+    .middle
+      %h3 Administradores
+      %table.data
+        - User.admins.each do |user|
+          %tr
+            %td= h link_to user.name,user
+            %td= link_to 'Editar', edit_admin_user_path(user), :class => "edit"
+            %td= link_to 'Eliminar', [:admin, user], :confirm => 'Estás seguro?', :method => :delete, :class => "delete"
+    .bottom
+.clear
+

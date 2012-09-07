@@ -1,0 +1,56 @@
+#content
+  = f.error_messages
+  #synopsis.widget
+    .top
+    .middle
+      %h3 La opinión
+      - f.inputs do
+        = f.input :blog_id,          :as => :hidden, :value => @post.blog.id
+        = f.input :user_id,          :as => :hidden, :value => current_user.id
+        = f.input :drafted_at,    :as => :hidden
+        = f.input :reviewed_at,   :as => :hidden
+      - f.inputs do
+        = f.input :title,   :label => 'Título'
+        = f.input :movie,   :label => 'Película', :as => :autocomplete, :url => member_autocomplete_movies_path(:format => :json), :param_name => 'title_begins_with'
+        = f.input :rating,  :label => 'Calificación'
+        = f.input :content, :label => 'Contenido',  :as => :text, :input_html => {:class => "tinymce"}
+        = f.input :headlines, :as => :text,  :label => 'Sumilla', :input_html => {:rows => "3"}
+
+    .bottom
+  #reviews.widget
+    .top
+    .middle
+      %h3 Referencia
+      - f.inputs do
+        = f.input :permalink, :hint => "Se creará uno automáticamente en caso de no ingresar uno"
+    .bottom
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      - commit_label = commit_label == 'Actualizar' && @post.status == Post::STATUSES[:published] ? 'A borrador' : commit_label
+      - f.buttons do
+        = f.commit_button 'Publicar'
+        = f.commit_button commit_label
+    .bottom
+  #categories_and_tags.widget
+    .top
+    .middle
+      %h3 Categorías y Etiquetas relacionadas
+      - f.inputs do
+        = f.input :categories, :as => :check_boxes, :label => "Categorías"
+        %h4= link_to 'Agregar categoría', new_member_category_path, :target => "_blank", :class => "button"
+      - f.inputs do
+        = f.input :cached_tag_list, :label => 'Etiquetas'
+    .bottom
+  #publishing.widget
+    .top
+    .middle
+      %h3 Publicación
+      - f.inputs do
+        = f.input :published_at,  :as => :date, :label => 'Fecha de publicación'
+    .bottom
+  .bottom
+.clear
+

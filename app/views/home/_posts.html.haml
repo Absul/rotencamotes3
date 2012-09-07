@@ -1,0 +1,8 @@
+/.oscar
+/  /- link_to "http://www.e-encuesta.com/answer.do?testid=REv6DsKJvCU&chk=1", :target => "_blank" do
+/  /  = image_tag "oscar.gif", :size => "480x70", :class => "banner_image"
+- if @posts.empty?
+  %p No hay entradas publicadas para esa categoría aún
+- else
+  = render :partial => "post", :collection => @posts
+

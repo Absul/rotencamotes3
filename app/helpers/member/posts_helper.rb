@@ -1,0 +1,4 @@
+module Member::PostsHelper
+
+end
+

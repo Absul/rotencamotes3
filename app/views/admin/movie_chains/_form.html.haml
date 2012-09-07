@@ -1,0 +1,27 @@
+#content
+  = f.error_messages
+  #movie_chain.widget
+    .top
+    .middle
+      %h3 Cadena
+      - f.inputs do
+        = f.input :name, :label => 'Nombre'
+        = f.input :address, :label => 'Dirección central'
+        = f.input :bio, :as => :text
+      - f.buttons do
+        = f.commit_button commit_label
+      %br
+      = link_to 'Regresar', admin_movie_chains_path
+    .bottom
+  .clear
+#sidebar
+  #chain_logo.widget
+    .top
+    .middle
+      %h3 Logo
+      - f.inputs do
+        = image_tag @movie_chain.logo.url(:thumb)
+        = f.input :logo, :as => :file, :label => 'Modificar'
+    .bottom
+  .clear
+

@@ -1,0 +1,20 @@
+- base_url = "http://#{request.host_with_port}"
+!!! XML
+%urlset{:xmlns => "http://www.sitemaps.org/schemas/sitemap/0.9"}
+  - for movie in @movies
+    %url
+      %loc= "#{base_url}/peliculas/#{movie.to_param}"
+      %lastmod= movie.updated_at.to_s(:db).split.first
+      %changefreq weekly
+      %priority 0.5
+  - for post in @posts
+    %url
+      %loc= "#{base_url}/camoteadas/#{post.to_param}"
+      %lastmod=post.updated_at.to_s(:db).split.first
+      %changefreq weekly
+      %priority 0.5
+  %url
+    %loc= "#{base_url}/cartelera"
+    %lastmod= Schedule.last.updated_at.to_s(:db).split.first
+    %changefreq monthly
+    %priority 0.5

@@ -1,0 +1,11 @@
+- f.inputs do
+  = f.input :user_id, :as => :hidden, :value => current_user.id
+- f.inputs do
+  = f.input :title, :label => 'Título'
+  = f.input :description, :label => 'Descripción', :hint => "Cuéntanos qué hace tu lista especial"  
+- f.inputs do
+  = label_tag "Añade películas a tu lista",nil, :class => "select_list"
+  = select_tag "list[items]"
+
+- f.buttons do
+  = f.commit_button commit_label 

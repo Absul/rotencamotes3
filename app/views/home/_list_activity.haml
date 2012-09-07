@@ -1,0 +1,23 @@
+.list
+  - if activity.user_id
+    .movie_poster
+      - link_to activity.user, :class => "movie tipsy", :title => activity.user.name do
+        = image_tag activity.user.avatar.url(:avatar), :size => "40x60"   
+  .content
+    .general
+      = link_to activity.user.name, activity.user
+      - if activity.action == "create"
+        creó su lista
+        = link_to activity.item.title, activity.item
+        .date
+          hace
+          = distance_of_time_in_words_to_now activity.created_at
+      - else
+        actualizó su lista
+        = link_to activity.item.title, activity.item
+    .info
+      = truncate activity.item.description, :lenght => 150
+      = link_to "Ver más", activity.item
+    .date    
+      hace
+      = distance_of_time_in_words_to_now activity.created_at

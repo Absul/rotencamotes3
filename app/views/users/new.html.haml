@@ -1,0 +1,7 @@
+
+
+- semantic_form_for(@user) do |f|
+  = f.error_messages
+  = render 'form', {:f => f, :commit_label => 'Create'}
+= link_to 'Back', users_path
+

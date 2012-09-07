@@ -1,0 +1,51 @@
+#content
+  #comment.widget
+    .top
+    .middle
+      %h3 Comentario
+      %p
+        %b Opninión
+      %p
+        = h @comment.post.title
+      %p
+        %b Email
+      %p
+        = h @comment.email
+      %p
+        %b Nombre
+      %p
+        = h @comment.name
+      %p
+        %b Website
+        = h @comment.website
+      %p
+        %b Usuario
+      %p
+        = h @comment.user.name if @comment.user
+      %p
+        %b Contenido
+      %p
+        = h @comment.content
+      %p
+        %b Estado
+      %p
+        = h @comment.status
+      %p
+        %b Resaltado
+      %p
+        = h @comment.featured
+      %p
+        = link_to 'Regresar', admin_comments_path
+    .bottom
+  .clear
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p
+        = link_to 'Editar', edit_admin_comment_path(@comment)
+    .bottom
+  .clear
+|
+

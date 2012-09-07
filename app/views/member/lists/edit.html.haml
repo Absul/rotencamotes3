@@ -1,0 +1,15 @@
+#content
+  #list.widget
+    .top
+    .middle
+      %h3 Editando la lista
+      - semantic_form_for([:member, @list]) do |f|
+        = f.error_messages
+        = render 'form', {:f => f, :commit_label => 'Actualizar'}
+      .links
+        = link_to 'Ver', @list
+        |
+        =link_to 'Regresar', user_path(current_user)
+    .bottom
+  .clear
+  = render :partial => "member/lists/movie", :collection => @list.items.of_movies

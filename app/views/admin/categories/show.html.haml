@@ -1,0 +1,22 @@
+#content
+  #category.widget
+    .top
+    .middle
+      %p
+        %b Nombre
+        = h @category.name
+      %p
+        %b Tipo de categoría
+        = h @category.category_type
+      = link_to 'Regresar', admin_categories_path
+    .bottom
+  .clear
+
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      = link_to 'Editar', edit_admin_category_path(@category)
+    .bottom
+  .clear
+

@@ -1,0 +1,60 @@
+#content
+	#user.widget
+		.top
+		.middle
+			%h3 Usuario
+			- f.inputs do
+				= f.input :email
+				= f.input :first_name, :label => "Nombre"
+				= f.input :last_name, :label => "Apellido"
+				= f.input :one_line_bio, :label => "Bio en una línea"
+				= f.input :bio, :label => "Bio", :as => "text"
+				= f.input :born_at, :as => :date, :start_year => 1900, :label => "Nacido el"
+				= f.input :url, :label => "Dirección URL"
+				- f.semantic_fields_for :profile do |profile|
+					= profile.input :current_location, :as => :country, :label => "Localizado en"
+		.bottom
+	#preferences.widget
+		.top
+		.middle
+			%h3 Favoritos
+			%p.short
+				En esta sección puedes darnos a conocer tus preferencias en el mundo del cine.
+			- f.inputs do
+				- f.semantic_fields_for :profile do |profile|
+					= profile.input :favorite_genre, :label => "Género"
+					= profile.input :favorite_actor, :label => "Actor"
+					= profile.input :favorite_director, :label => "Director"
+					= profile.input :favorite_writer, :label => "Escritor"
+					= profile.input :favorite_movie, :label => "Película"
+					= profile.input :favorite_movie_character, :label => "Personaje de película"
+					= profile.input :favorite_movie_line, :label => "Frase de película"
+		.bottom
+	.clear
+#sidebar
+	#actions.widget
+		.top
+		.middle
+			%h3 Acciones
+			- f.buttons do
+				= f.commit_button commit_label
+		.bottom
+	#avatar.widget
+		.top
+		.middle
+			%h3 Avatar
+			-f.inputs do
+				= image_tag @user.avatar.url(:avatar)
+				= f.input :avatar, :as => :file, :label => "Modificar", :required => false
+		.bottom
+	#password.widget
+		.top
+		.middle
+			%h3 Contraseña
+			- f.inputs do
+				= f.input :password, :as => :password, :required => false, :label => "Contraseña", :hint => "Sólo si quieres cambiarla"
+				= f.input :password_confirmation, :as => :password, :required => false,	 :label => "Confirmación de Contraseña"
+		.bottom
+
+.clear
+

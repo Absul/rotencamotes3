@@ -1,0 +1,13 @@
+#content
+  #people.widget
+    .top
+    .middle
+      %h3 Personas
+      %table.data
+        - @people.each do |person|
+          %tr
+            %td= h person.short_name
+            %td= link_to 'Ver', person
+    .bottom
+  .clear
+

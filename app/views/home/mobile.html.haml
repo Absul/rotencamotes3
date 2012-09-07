@@ -1,0 +1,90 @@
+%ul{"data-role"=>"listview","data-filter"=>"true","data-filter-placeholder"=>"Búsqueda directa"}  
+  %li{"data-role" => "list-divider"} Cartelera
+  - @movies.each do |movie|
+    %li
+      = image_tag movie.banner.url(:scheduled), :alt => movie.title, :title => movie.title
+      %h4= link_to truncate(movie.title,26), [:mobile,movie]
+      %p= truncate(strip_tags(movie.content), 300)
+      %h1{:class => "ui-li-aside"}= render_score movie.final_score
+
+- content_for :nav_bar do 
+
+  %ul
+    %li= link_to "Cartelera", "#home_cartelera", "data-role" => "button"
+    %li= link_to "Opiniones", "#home_opiniones", "data-role" => "button"
+    %li= link_to "Comentarios", "#home_comentarios", "data-role" => "button"            
+  
+- content_for :pages do 
+
+  %div{"data-role" => "page", :id => "home_opiniones"}
+    %div{"data-role" => "header"}
+      %h1 VotenCamotes :: Opiniones
+      %div{"data-role" => "navbar"}      
+        %ul
+          %li= link_to "Cartelera", "#home_cartelera", "data-role" => "button"
+          %li= link_to "Opiniones", "#home_opiniones", "data-role" => "button"
+          %li= link_to "Comentarios", "#home_comentarios", "data-role" => "button"
+        
+    / /header
+    %div{"data-role" => "content"}
+
+      %ul{"data-role"=>"listview","data-filter"=>"true","data-filter-placeholder"=>"Búsqueda directa"}  
+        %li{"data-role" => "list-divider"} Opiniones
+        - @posts.each do |post|
+          %li
+            - if post.movie
+              = image_tag post.movie.banner.url(:scheduled) 
+            %h4= link_to post.title_with_score, post
+            %p
+              - size = post.movie_id? ? 300 : 400
+              = summary_of(post.content, size)
+              %b= link_to 'leer más', post
+
+    / /content
+    %div{"data-role" => "footer"}
+      %div{"data-role" => "navbar"}
+        %ul
+          %li= link_to "Versión completa", root_path, "data-role" => "button"
+    / /footer
+  / /page
+  
+  %div{"data-role" => "page", :id => "home_comentarios"}
+    %div{"data-role" => "header"}
+      %h1 VotenCamotes :: Comentarios
+      %div{"data-role" => "navbar"}      
+        %ul
+          %li= link_to "Cartelera", "#home_cartelera", "data-role" => "button"
+          %li= link_to "Opiniones", "#home_opiniones", "data-role" => "button"
+          %li= link_to "Comentarios", "#home_comentarios", "data-role" => "button"
+      
+    / /header
+    %div{"data-role" => "content"}
+
+      %ul{"data-role"=>"listview","data-filter"=>"true","data-filter-placeholder"=>"Búsqueda directa"}  
+        %li{"data-role" => "list-divider"} Comentarios
+        - @comments.each do |comment|
+          %li
+            - if comment.user
+              = image_tag comment.user.avatar.url(:avatar), :class => "avatar", :title => comment.user.full_name #, :size => "64x64"
+              %h1= comment.user.full_name
+            - else
+              = image_tag "unknown.png", :class => "avatar", :title => comment.name #, :size => "64x64"
+              %h1= comment.name
+            %p
+              = summary_of(comment.content)
+              - if comment.post
+                = link_to "Leer más", post_path(comment.post, :anchor => "comment_#{comment.id}")
+              - else
+                = link_to "Leer más", movie_path(comment.movie, :anchor => "comment_#{comment.id}")
+
+    / /content
+    %div{"data-role" => "footer"}
+      %div{"data-role" => "navbar"}
+        %ul
+          %li= link_to "Versión completa", root_path, "data-role" => "button"
+    / /footer
+  / /page
+  
+
+  
+  

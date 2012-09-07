@@ -1,0 +1,13 @@
+%li.movie
+  .top
+  .middle
+    - link_to movie, :class => "tipsy", :title => movie.title do 
+      = image_tag movie.banner.url(:banner), :alt => movie.title, :title => movie.title, :size => "150x222"
+    = link_to truncate(movie.title, :length => 26), movie
+    .below{:style => "overflow:auto"}
+      .left.camote{:style=>"float:left"}= render_score movie.final_score
+      - if movie.trailers?
+        .right.trailer{:style=>"float:right"}
+          - link_to trailer_movie_path(movie), :class => "tipsy", :title => "Ver trailer", :rel => "facebox" do
+            = image_tag("trailer.png", :size => "16x16", :style => "margin-bottom:0px !important")
+  .bottom  

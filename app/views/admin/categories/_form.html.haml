@@ -1,0 +1,16 @@
+#content
+  = f.error_messages
+  #category.widget
+    .top
+    .middle
+      %h3 Categoría de Blog
+      - f.inputs do
+        = f.input :name, :label => 'Nombre'
+        = f.input :category_type, :label => 'Tipo de categoría'
+      - f.buttons do
+        = f.commit_button commit_label
+      %br
+      =link_to 'Regresar', admin_categories_path
+    .bottom
+  .clear
+

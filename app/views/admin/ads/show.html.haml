@@ -1,0 +1,30 @@
+#content
+  #ad.widget
+    .top
+    .middle
+      %h3 Aviso de publicidad
+      %p
+        = link_to 'Editar', edit_admin_ad_path(@ad)
+      %p
+        %b Nombre:
+        = h @ad.name
+      %p
+        %b Campaña:
+        = h @ad.campaign
+      %p
+        %b Contenido:
+        = h @ad.content
+      %p
+        %b Desde:
+        = h @ad.started_at.try(:strftime, '%d-%b-%Y')
+      %p
+        %b Hasta:
+        = h @ad.finished_at.try(:strftime, '%d-%b-%Y')
+      %p
+        %b Ubicación:
+        = h @ad.place
+      %p
+        = link_to 'Regresar', admin_ads_path
+    .bottom
+  .clear
+

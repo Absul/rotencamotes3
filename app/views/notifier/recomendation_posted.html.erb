@@ -1,0 +1,33 @@
+<style>
+ .rating{font-size:20px;font-family:Arial;font-weight:bold}
+ blockquote{padding:10px;background-color: #f4d094;border: 1px solid #FED9B6;}
+ a {color: #c35b10;}
+</style>
+
+¡Hola camotero!
+<% if @recomendation.user %>
+  Tu amigo <%= link_to @recomendation.user.name, user_url(@recomendation.user), :style => "color: #c35b10;"%>
+	te recomienda esta película
+<% else %> 
+	Alguien en <%= link_to "Votencamotes.com", "votencamotes.com", :style => "color: #c35b10;" %> te recomienda esta película
+<% end %>
+<p><em style="font-size:16px"><%= simple_format @recomendation.message %></em></p>
+  <blockquote style="padding:10px;border: 1px solid #FED9B6;">
+    <h2>
+	<%= link_to @recomendation.movie.name_with_year, movie_url(@recomendation.movie), :style => "color: #c35b10;" %></h2>
+    <small><%= @recomendation.movie.genres_names %></small>
+    
+    <p><%= simple_format @recomendation.movie.content %></p>
+    <h3>Actúan:</h3>
+    <p><%= @recomendation.movie.cast_names %></p>
+    <p class="rating" style="font-size:20px;font-family:Arial;font-weight:bold">
+      Puntaje:
+      <%= number_to_percentage @recomendation.movie.final_score, :precision => 0 %>
+    </p>
+    <% if @recomendation.movie.trailers? %>
+      <h3>
+      <%= link_to "Ver Trailer", trailer_movie_url(@recomendation.movie), :style => "color: #c35b10;" %>
+      </h3>
+    <% end %>
+
+  </blockquote>

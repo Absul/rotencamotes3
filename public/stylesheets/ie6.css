@@ -1,0 +1,191 @@
+/* imagenes transparentes para ie */
+#logo {
+	background:none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/logo.png', sizingMethod='crop');
+}
+ .movie .top,
+ .movie .middle,
+ .movie .bottom {
+	background:none;
+}
+
+ .movie .top {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/movie-top.png', sizingMethod='crop');
+}
+
+ .movie .middle {
+	height:100%;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/movie-middle.png', sizingMethod='scale');
+}
+
+ .movie .bottom {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/movie-bottom.png', sizingMethod='crop');
+}
+
+ #content .widget .top,
+ #content .widget .middle,
+ #content .widget .bottom {
+	background:none;
+}
+
+ #content .widget .top {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/content-top.png', sizingMethod='crop');
+}
+
+ #content .widget .middle {
+	height:100%;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/content-middle.png', sizingMethod='scale');
+}
+
+ #content .widget .bottom {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/content-bottom.png', sizingMethod='crop');
+}
+
+ #sidebar .widget .top,
+ #sidebar .widget .middle,
+ #sidebar .widget .bottom {
+	background:none;
+}
+
+ #sidebar .widget .top {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/sidebar-top.png', sizingMethod='crop');
+}
+
+ #sidebar .widget .middle {
+	height:100%;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/sidebar-middle.png', sizingMethod='scale');
+}
+
+.cartelera li .rating{
+	margin:20px 0 0 15px;
+}
+
+.cartelera li,
+.cartelera li.last {
+	border-bottom:none;
+	border-top:solid 1px #ccc;
+}
+
+.cartelera li.first {
+	border:none;
+}
+
+ #sidebar .widget .bottom {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/sidebar-bottom.png', sizingMethod='crop');
+}
+
+ .home #container .talking .top,
+ .home #container .talking .middle,
+ .home #container .talking .bottom {
+	background:none;
+}
+
+.home #container .talking .top {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/container-top.png', sizingMethod='crop');
+}
+
+.home #container .talking .middle {
+	height:100%;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/container-middle.png', sizingMethod='scale');
+}
+
+.home #container .talking .bottom {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/container-bottom.png', sizingMethod='crop');
+}
+
+#sidebar #watch h4 {
+	background:none;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/watch-title.png', sizingMethod='crop');
+}
+
+#movie #rating .stars,
+#movie #rating .stars .fill {
+	background:none
+}
+
+#movie #rating .stars {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/ie6-stars-fill.png', sizingMethod='crop');	
+}
+
+#movie #rating .stars .fill {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/ie6-stars.png', sizingMethod='crop');
+		
+}
+
+div.rotten,
+div.camote{
+	background:none;
+}
+
+div.rotten{
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/rotten.png', sizingMethod='crop');
+}
+
+div.camote{
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/camote-medium.png', sizingMethod='crop');
+}
+
+#sidebar #share .links a {
+	background:none;
+}
+
+#sidebar #share .links a.facebook {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/logo-facebook.png', sizingMethod='crop');
+}
+#sidebar #share .links a.twitter {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/logo-twitter.png', sizingMethod='crop');
+}
+#sidebar #share .links a.email {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/logo-mail.png', sizingMethod='crop');
+}
+
+/* // imagenes transparentes */
+
+li.movie .camote {
+	background:url("../images/ie6-camote-small.png") no-repeat left center;
+}
+
+.talking div.avatar {
+	background:url("../images/ie6-response-arrow-left.png") no-repeat right 25px;
+}
+
+
+#reviews li.camote,
+.cartelera li .rating {
+	background:url("../images/ie6-camote-medium.png") no-repeat;
+}
+
+#reviews li {
+	height:100%;
+}
+
+#reviews li.camote {
+	background-position:465px 20px;
+}
+
+#reviews li.rotten {
+	background:url("../images/ie6-rotten.png") no-repeat scroll 460px 20px transparent
+}
+
+#reply form li.rating label.rotten span,
+#reply form li.rating label.camote span{
+	background:none;
+}
+
+#reply form li.rating label.camote span {
+	margin-top:5px;
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/camote-medium.png');
+}
+
+#reply form li.rating label.rotten span {
+	filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='../images/rotten.png');
+	
+}
+
+#movie .movie a {
+	width:138px;
+}
+
+#new_comment {
+	width:468px;
+}

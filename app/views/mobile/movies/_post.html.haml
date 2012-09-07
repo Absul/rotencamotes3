@@ -1,0 +1,6 @@
+= image_tag post.movie.banner.url(:scheduled) 
+%h4= link_to post.title_with_score, post
+%p
+  - size = post.movie_id? ? 300 : 400
+  = summary_of(post.content, size)
+  %strong= link_to 'leer más', post

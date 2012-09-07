@@ -1,0 +1,39 @@
+- semantic_form_for @comment do |f|
+  - f.inputs do
+    - if current_user
+      %li.rating
+        %p Votación
+        %label.camote{:for=>"camote", :title => "Me gustó", :class => "tipsy"}
+          %span
+        %input.hide{:id=>"camote", :name=>"score_value", :type=>"radio", :value=>"5"}
+        %label.rotten{:for=>"rotten", :title => "No me gustó", :class => "tipsy"}
+          %span
+        %input.hide{:id=>"rotten", :name=>"score_value", :type=>"radio", :value=>"1"}
+    - else
+      %li.invitation
+        = 'Voto: Los usuarios registrados pueden dejar su voto para las películas.'
+        = link_to 'Regístrate', new_user_registration_path(:back_to => request.request_uri)
+        = " ó "
+        = link_to 'inicia sesión', new_user_session_path(:back_to => request.request_uri)
+        o 
+        = link_to_oauth2("user","entra vía facebook")
+        = "para dejar tu voto."
+    %p{:style => "width: 1px; height: 1px; overflow: hidden; !important"}
+      Por favor, ignore el siguiente campo:
+      = f.input :comment
+    = f.input :content, :label => 'Comentario', :as => :text, :wrapper_html => {:class => "comment"}
+    = f.input :movie_id, :as => :hidden, :value => @movie.id
+    - if current_user
+      = f.input :name,  :as => :hidden, :value => current_user.full_name
+      = f.input :email, :as => :hidden, :value => current_user.email
+      = f.input :user_id, :as => :hidden, :value => current_user.id
+      %li
+        %label{:for=>"theatre_id"} La vi en
+        = select_tag 'theatre_id', grouped_options_for_select(places_to_watch, nil, "Selecciona..."), {:id => "cine", :include_blank => true}
+
+    - else
+      = f.input :name,  :label => 'Nombre'
+      = f.input :email, :label => 'Email'
+  - f.buttons do
+    = f.commit_button 'Comentar'
+

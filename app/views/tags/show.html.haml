@@ -1,0 +1,100 @@
+#content
+	- unless @tag.banner_file_name.nil?
+		#banner.widget
+			.top
+			.middle
+				= image_tag @tag.banner.url(:large), :style =>"margin-left:3px;margin-top:1px;"
+			.bottom
+	#posts.widget
+		.top
+		.middle
+			%h3
+				Camoteadas de
+				= @tag.name
+			- if @posts.size == 0
+				%h4 Sin camoteadas
+			- @posts.each do |post|
+				.post
+					- if post.movie
+						.movie_poster
+							- link_to movie_path(post.movie), :class => "movie tipsy", :title => post.movie.title do
+								= image_tag post.movie.banner.url(:scheduled) 
+					.movie_post{:class => ("large" if not post.movie_id)}
+						%h4= link_to post.title_with_score, post
+						.detail
+							%p.about_post
+								En
+								= link_to post.blog.name, post.blog
+								por
+								= link_to(post.user.full_name, post.user)
+								= ", el #{post.try(:published_at).try(:to_date).try(:strftime,'%d-%b-%Y')}"
+							%p
+								= summary_of(post.content, 300)
+								%b= link_to 'leer más', post
+							%br
+				.clear
+		.bottom
+#sidebar
+	#about_tag.widget
+		.top
+		.middle
+			%h3= "Sobre #{@tag.name}"
+			%p.short
+				= "Total de películas: #{@movies.size}"
+			%p.short
+				= "Total de camoteadas: #{@posts.size}"
+		.bottom
+
+	#tweets.widget
+		.top
+		.middle
+			%h3
+				Camotweets de
+				= @tag.name
+			= render :partial => "twitter"
+		.bottom
+	- unless @movies_on_theatres.empty?
+		#movies_on_theatres.widget
+			.top
+			.middle
+				%h3
+					= "Cartelera"
+					- if @tag
+						= " sobre #{@tag.name}"
+				%ul.cartelera
+					- @movies_on_theatres.each do |movie|
+						%li
+							- link_to movie, :class => "movie", :title => movie.title do
+								= image_tag movie.banner.url(:scheduled)
+							.desc
+								= link_to movie.title, movie, :class => "title", :title => movie.title
+								%p.tags
+									- movie.genres.each do |genre|
+										= link_to genre.name, genre, :title => genre.name, :class => "title"
+								= link_to "Opiniones (#{movie.posts.size})", movie_posts_path(movie)
+							%p.rating= render_score movie.final_score
+							.clear
+			.bottom
+	- unless @movies.empty?
+		#movies.widget
+			.top
+			.middle
+				%h3
+					= "Películas"
+					- if @tag
+						= " sobre #{@tag.name}"
+				%ul.cartelera
+					- @movies.each do |movie|
+						%li
+							- link_to movie, :class => "movie", :title => movie.title do
+								= image_tag movie.banner.url(:scheduled)
+							.desc
+								= link_to movie.title, movie, :class => "title", :title => movie.title
+								%p.tags
+									- movie.genres.each do |genre|
+										= link_to genre.name, genre, :title => genre.name, :class => "title"
+								= link_to "Opiniones (#{movie.posts.size})", movie_posts_path(movie)
+							%p.rating= render_score movie.final_score
+							.clear
+			.bottom
+.clear

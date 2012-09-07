@@ -1,0 +1,23 @@
+- require 'uri'
+#content
+	#tags.widget
+		.top
+		.middle
+			%h3 Etiquetas
+			%table.data
+				%tr
+					%th Nombre
+					%th Banner?
+					%th
+					%th
+				- @tags.each do |tag|
+					%tr
+						%td= h tag.name
+						%td
+							= tag.banner_file_name? ? "Sí" : "No"
+						%td= link_to 'Editar', edit_admin_tag_path(tag.id)
+						%td= link_to 'Eliminar', admin_tag_path(tag.id), :confirm => 'Estás seguro?', :method => :delete
+			%br/
+			= link_to 'Nueva etiqueta', new_admin_tag_path
+		.bottom
+	.clear

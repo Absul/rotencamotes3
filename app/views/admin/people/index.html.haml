@@ -1,0 +1,55 @@
+#content
+  #people.widget
+    .top
+    .middle
+      %h3 Personas
+      %table.data
+        %tr{:class => cycle("even", "odd")}
+          %th Nombre
+          %th Identidad
+          %th Foto
+          %th Nacimiento
+          %th Bio
+        - @people.each do |person|
+          -if person.similars.empty?
+            %tr{:class => cycle("even", "odd")}
+              %td= h link_to person.short_name, person
+              %td= h person.identity? ? " " : "Incompleto"
+              %td= h person.picture?  ? " " : "Incompleto"
+              %td= h person.birth?    ? " " : "Incompleto"
+              %td= h person.bio?      ? " " : "Incompleto"
+              %td= link_to 'Editar', edit_admin_person_path(person), :class => "edit"
+              %td= link_to 'Eliminar', [:admin, person], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+      = will_paginate @people
+    .bottom
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p.short
+        = link_to 'Nueva persona', new_admin_person_path
+    .bottom
+  #inconsistences.widget
+    .top
+    .middle
+      %h3 Inconsistencias
+      %table.data
+        %tr{:class => cycle("even", "odd")}
+          %th Nombre
+          %th Nacido el
+          %th Nacido en
+          %th Dup
+        - Person.all.each do |person|
+          - if person.similars.count > 0
+            %tr{:class => cycle("even", "odd")}
+              %td= h link_to person.short_name, person
+              %td= h person.try(:born_at).try(:strftime,"%d-%b-%Y")
+              %td= h person.born_in
+              %td= h person.similars.count
+              %td= link_to 'Editar', edit_admin_person_path(person), :class => "edit"
+              %td= link_to 'Eliminar', [:admin, person], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+    .bottom
+
+  .clear
+

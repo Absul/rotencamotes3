@@ -1,0 +1,29 @@
+!!!
+%html
+  %head
+    %title Votencamotes :: Mobile
+    %link{:href => "http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.css", :rel => "stylesheet"}/
+    %script{:src => "http://code.jquery.com/jquery-1.4.3.min.js"}
+    %script{:src => "http://code.jquery.com/mobile/1.0a1/jquery.mobile-1.0a1.min.js"}
+    %script{:type=>"text/javascript", :src=>"http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAXMgBsic0JFR5LXYOW2dCVxQ8xGgx7x61ij-dWTE0sD3RQrlR5hTgkqg4X2_j1mZgFgv01mJkRbFaJA"}
+    %script{:src => "/javascripts/mobile.js"}
+    %meta{:name=>"viewport", :content=>"width=device-width, minimum-scale=1, maximum-scale=1"}
+    = yield :extra_javascripts
+  %body
+    %div{"data-role" => "page", "id" => "home_cartelera"}
+      %div{"data-role" => "header"}
+        %h1
+          VotenCamotes :: Movil 
+        %div{"data-role" => "navbar"}
+          = yield :nav_bar
+      / /header
+      %div{"data-role" => "content"}
+        = yield
+      / /content
+      %div{"data-role" => "footer"}
+        %div{"data-role" => "navbar"}
+          %ul
+            %li= link_to "Versión completa", root_path, "data-role" => "button"
+      / /header
+    / /page
+    = yield :pages

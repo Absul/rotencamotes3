@@ -1,0 +1,95 @@
+#content
+
+	#reviews.widget
+		.top
+		.middle
+			%h3 Opiniones y comentarios
+			%p.short
+				= link_to 'Blogs.', admin_blogs_path
+				Maneja los blogs de opiniones en el sitio.
+			%p.short
+				= link_to 'Opiniones.', admin_posts_path
+				Revisa y edita las opiniones en los diferentes blogs.
+			%p.short
+				= link_to 'Comentarios.', admin_comments_path
+				Modera los comentarios de los usuarios sobre las opiniones o películas.
+			%p.short
+				= link_to 'Valoraciones.', admin_scores_path
+				Revisa y soluciona problemas en las valoraciones de las películas.
+			%p.short
+				= link_to 'Categorías.', admin_categories_path
+				Mantén al día las categorías para blogs y opiniones.
+			%p.short
+				= link_to 'Etiquetas.', admin_tags_path
+				Catálogo de etiquetas para opiniones y películas.
+
+		.bottom
+	#schedules.widget
+		.top
+		.middle
+			%h3 Cartelera y cines
+			%p.short
+				= link_to 'Cartelera.', admin_schedules_path
+				Revisa y has ajustes en la cartelera.
+			%p.short
+				= link_to 'Cadenas.', admin_movie_chains_path
+				Mantén actualizada la información de las cadenas de cine a nivel nacional.
+
+		.bottom
+
+	#movies.widget
+		.top
+		.middle
+			%h3 Películas
+			%p.short
+				= link_to 'Estudios.', admin_studios_path
+				Catálogo de Estudios de Cine.
+			%p.short
+				= link_to 'Películas.', admin_movies_path
+				Actualiza la información de las películas.
+			%p.short
+				= link_to 'Personajes.', admin_movie_characters_path
+				Aquí puedes actualizar la información de quién actuó dónde y con qué personaje.
+			%p.short
+				= link_to 'Directores.', admin_movie_directors_path
+				Aquí puedes registrar quiénes tuvieron a su cargo la dirección de las películas.
+			%p.short
+				= link_to 'Guionistas.', admin_movie_writers_path
+				Un registro de qué guionistas colaboraron en qué películas.
+			%p.short
+				= link_to 'Géneros.', admin_genres_path
+				Actualiza la lista de posibles géneros para las películas.
+			%p.short
+				= link_to 'Premios.', admin_awards_path
+				Registra los premios recibidos por películas y personajes del cine.
+			%p.short
+				= link_to 'Instituciones.', admin_award_institutions_path
+				La relación de instituciones reconocidas que otorgan premios en la industria.
+			%p.short
+				= link_to 'Categorías de premios.', admin_award_categories_path
+				Actualiza las categorías de premios que pueden otorgarse.
+			%p.short
+				= link_to 'Personas.', admin_people_path
+				Catálogo de información de estrellas y personalidades en el mundo del cine.
+
+		.bottom
+
+	#business.widget
+		.top
+		.middle
+			%h3 Negocio
+			%p.short
+				= link_to 'Publicidad.', admin_ads_path
+				Avisos de publicidad en el sitio.
+		.bottom
+
+#sidebar
+	#security.widget
+		.top
+		.middle
+			%h3 Seguridad
+			%p.short
+				= link_to 'Usuarios.', admin_users_path
+				Agrega y actualiza usuarios para el sitio.
+		.bottom
+

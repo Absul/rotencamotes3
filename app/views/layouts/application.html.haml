@@ -1,0 +1,135 @@
+!!! 5
+%html{:class => "no-js"}
+  %head
+    %meta{'http-equiv' => 'Content-Type', :content => "text/html; charset=iso-8859-1"}
+    %link{ :rel=>"shortcut icon", :href=>"/favicon.ico"}
+    = yield :fb_tags
+    = auto_discovery_link_tag :rss, root_rss_path
+    %title= title
+    = #stylesheet_link_tag 'formtastic','formtastic_changes','reset','layout','banner','facebox', '../javascripts/uniform/css/uniform.default','sunny/jquery-ui-1.8.5.custom', :cache => "pepper"
+    = include_stylesheets :pepper, :media => 'all'
+
+
+    /[if IE 6 ]
+      %link{:href => "stylesheets/ie6.css", :media => "screen", :rel => "stylesheet", :type => "text/css"}
+    /[if IE]
+      %script{:src=>"http://html5shim.googlecode.com/svn/trunk/html5.js"}
+  /[if lt IE 7 ]
+    :erb
+      <body class="ie6 ie <%= controller.controller_name %> <%= home_page %>">
+  /[if IE 7 ]
+    :erb
+      <body class="ie7 ie <%= controller.controller_name %><%= home_page %>">
+  /[if IE 8 ]
+    :erb
+      <body class="ie8 ie <%= controller.controller_name %><%= home_page %>">
+  /[if IE 9 ]
+    :erb
+      <body class="ie9 ie <%= controller.controller_name %><%= home_page %>">
+  / [if (gt IE 9)|!(IE)]><!
+  %body{:class=>[controller.controller_name,(home_page)], :onload => @onload, :onunload => @onunload}
+    / <![endif]>
+    %header
+      #header
+        .wrapper
+          %a#logo.tour_9.potter{:href=> root_path}
+            %span.hide VotenCamotes
+          %nav{:role => "navigation"}
+            %ul
+              %li= link_to "Inicio", root_path
+              %li= link_to "Cartelera", schedules_path
+              %li= link_to "Opiniones", posts_path
+              %li= link_to "Cines", movie_chains_path
+              / %li
+              /   %a{:href => "#"}Contáctenos
+              %li= link_to "FAQ", "http://votencamotes.com/camoteadas/39--conceptos-preguntas-frecuentes-blah-blah"
+              %li= link_to "Acerca de", "http://votencamotes.com/camoteadas/38--sobre-votencamotes-com"
+            .clear
+            - if current_user
+              %p.short
+                = 'conectado como '
+                = link_to(smart_connected_as, current_user)
+                |
+                - if current_user.expert? && current_user.blog
+                  = link_to('Mis opiniones', member_posts_path)
+                  |
+                  = link_to('Nueva opinión', new_member_post_path)
+                  |
+                - if current_user.admin?
+                  = link_to('Administrar', admin_admin_root_path)
+                  |
+                = link_to('Finalizar sesión', destroy_user_session_path)
+            - else
+              %p.short
+                = link_to "Regístrate", new_user_registration_path(:back_to => request.request_uri)
+                o
+                = link_to('Iniciar sesión', new_user_session_path(:back_to => request.request_uri))
+                o
+                = link_to_oauth2("user","entra vía facebook")
+          - form_tag search_path, :method => :get, :class=>"search" do
+            = text_field_tag "search"
+            = submit_tag "Buscar", :class=>"submit"
+
+          /%form.search{:role => "search", :enctype => "text/plain", :method => "post", :action => "/search"}
+          /  %input{:type => "text", :value => "Busca tus películas, géneros, años o lo que quieras", :name => "search"}
+          /  %input.submit{:type => "submit"}
+
+
+    = yield :banner
+    #container.wrapper
+      = yield
+
+
+    %footer
+      #footer.wrapper
+        %nav{:role => "navigation"}
+          %ul
+            %li= link_to "Inicio", root_path
+            %li= link_to "Cartelera", schedules_path
+            %li= link_to "Opiniones", posts_path
+            %li= link_to "Cines", movie_chains_path
+            %li= link_to "FAQ", "http://votencamotes.com/camoteadas/39--conceptos-preguntas-frecuentes-blah-blah"
+            %li= link_to "Acerca de", "http://votencamotes.com/camoteadas/38--sobre-votencamotes-com"
+            /%li
+            /  %a{:href => "#"}Contáctenos
+    #fb-root
+    :javascript
+
+      var _gaq = _gaq || [];
+       _gaq.push(['_setAccount', 'UA-19299409-1']);
+       _gaq.push(['_trackPageview']);
+
+       (function() {
+         var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+
+    :javascript
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId: '163523653668565', // Your Facebook ID
+          status: true, 
+          cookie: true,
+          xfbml: true
+      });
+      };
+      (function() {
+      var e = document.createElement('script'); e.async = true;
+      e.src = document.location.protocol +
+          '//connect.facebook.net/en_US/all.js';
+      document.getElementById('fb-root').appendChild(e);
+      }());
+
+
+
+    = include_javascripts :sugar
+    = include_javascripts :salt
+
+    / = javascript_include_tag "jquery",  'jquery-ui-1.8.5.custom.min',"modernizr-1.6.min","jcarousellite_1.0.1.min", "jquery.jtruncate.pack", 'jquery.masonry.min', 'jquery.supersleight', 'facebox'
+    / = javascript_include_tag 'uniform/jquery.uniform',"application"
+
+    = javascript_include_tiny_mce_if_used
+    = tiny_mce if using_tiny_mce?
+    = yield :extra_javascripts
+

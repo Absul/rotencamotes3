@@ -1,0 +1,4 @@
+- if activity_counter == 2 && controller.action_name = "index"
+  = link_to image_tag("banner_limite_visual.jpg", :size => '500x130', :class => "banner_image"), "http://limitevisual.com", :target => "_blank"
+%li.activity
+  = render :partial => "#{activity.item_type.downcase}_activity", :locals => {:activity => activity}

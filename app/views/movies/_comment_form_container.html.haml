@@ -1,0 +1,7 @@
+#reply.widget
+  .top
+  .middle
+    %h3 Deja Tu comentario y valoración para
+    %h4= @movie.name_with_year
+    = render :partial => 'comment_form'
+  .bottom

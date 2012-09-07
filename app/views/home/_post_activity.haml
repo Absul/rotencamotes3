@@ -1,0 +1,20 @@
+.post
+  - if activity.item.movie
+    .movie_poster
+      - link_to movie_path(activity.item.movie), :class => "movie tipsy", :title => "Ir a #{activity.item.movie.title}" do
+        = image_tag activity.item.movie.banner.url(:scheduled), :size => "40x60"   
+  .content
+    .general
+      = link_to activity.user.name, activity.user
+      - if activity.action == "create"
+        publicó
+        = link_to activity.item.title, activity.item
+      - else
+        actualizó
+        = link_to activity.item.title, activity.item
+    .info
+      = truncate strip_tags(activity.item.content), :lenght => 150
+      = link_to "Ver más", activity.item    
+    .date
+      hace
+      = distance_of_time_in_words_to_now activity.created_at

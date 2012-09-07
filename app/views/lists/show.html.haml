@@ -1,0 +1,76 @@
+- content_for :fb_tags do
+  %meta{:property=>"og:title", :content=>"VotenCamotes.com - #{@list.title} - Lista #{ "sobre #{@list.user.full_name}" if @list.title }"}
+  %meta{:property=>"og:site_name", :content=>"VotenCamotes"}
+
+#content
+  #movies_seen.widget
+    .top
+    .middle
+      %h3
+        Lista
+        = @list.title
+        - if are_you?(@list.user)
+          = link_to "Editar", edit_member_list_path(@list), :class => "edit"
+      %p=@list.description
+      %ul.cartelera
+        - @list.movies.each do |movie|
+          %li
+            - link_to movie, :class => "movie", :title => movie.title do
+              = image_tag movie.banner.url(:scheduled)
+            .desc
+              = link_to truncate(movie.title,30), movie, :class => "title", :title => movie.title
+              .final_score= render_score(movie.final_score)
+              %p.tags
+                - movie.genres.each do |genre|
+                  = link_to genre.name, genre, :title => genre.name, :class => "title"
+              = link_to "Opiniones (#{movie.related_comments})", movie_posts_path(movie)
+      %p.social{:style => "margin-top:10px;"}
+        %script{:type=>"text/javascript", :src=>"http://platform.twitter.com/widgets.js"}
+        %a{:href=>"http://twitter.com/share", :class=>"twitter-share-button", "data-count"=>"horizontal", "data-via"=>"votencamotes", "data-lang"=>"es"}
+          Tweet
+        %span.share
+          %iframe{:allowtransparency => "true", :frameborder => "0", :scrolling => "no", :src => "http://www.facebook.com/plugins/like.php?href=#{CGI::escape(list_url(@list))}&amp;layout=standard&amp;show_faces=false&amp;width=400&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=40", :style => "border:none; overflow:hidden; width:400px; height:40px;margin-top:0px;"}
+      %a.facebook{:href=>"http://www.facebook.com/sharer.php?u=#{list_url(@list)}&t=#{URI.encode("Lista de películas #{@list.title} en VotenCamotes.com de #{@list.user.full_name}")}"}
+        Compartir esta lista en Facebook
+      .clear
+    .bottom
+
+#sidebar
+  #movie.widget.blogger
+    .top
+    .middle
+      .movie
+        = avatar_tag(@list.user)
+        .clear
+      .detail
+        .spec
+          %p.short
+            %h4.author{:style => "margin-top:10px"}
+              Publicado por
+              = link_to h(@list.user.name), @list.user
+          %p{:style => "color: #BF7839;font-size: 13px;line-height: 1em mportant;"}
+            = summary_of h @list.user.bio
+      .clear
+    .bottom
+
+  .widget
+    .top
+    .middle
+      %h3 Últimas listas publicadas
+      %ul
+        - @lists.each do |list|
+          %li.list
+            - if list.user_id
+              .movie_poster
+                - link_to list.user, :class => "movie tipsy", :title => list.user.name do
+                  = image_tag list.user.avatar.url(:avatar), :size => "60x60"   
+            .content
+              .general
+                %p= link_to list.title, list
+                %h4= link_to list.user.name, list.user      
+              .info
+                %p
+                  = truncate list.description, 90
+                  = link_to "Ver más", list        
+      .clear
+    .bottom    

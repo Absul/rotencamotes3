@@ -1,0 +1,7 @@
+%p
+  %b Nombre:
+  = h @genre.name
+= link_to 'Editar', edit_admin_genre_path(@genre)
+|
+\#{link_to 'Regresar', [:admin, genres_path]}
+

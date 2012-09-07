@@ -1,0 +1,10 @@
+%ul.cartelera
+  %li
+    - link_to person, :class => "movie", :title => person.short_name do
+      = image_tag person.picture.url(:banner), :size => "65x97"
+    .desc
+      = link_to person.short_name, person
+      %p.tags
+        = person.try(:roles)
+    .clear
+

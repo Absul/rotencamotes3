@@ -1,0 +1,18 @@
+%li{:class => score_icon(comment.score), :id =>"comment_#{comment.id}"}
+  - if comment.user
+    = image_tag comment.user.avatar.url(:avatar), :class => "avatar", :title => comment.user.name, :size => "64x64"
+    %h1= comment.user.name
+  - else
+    = image_tag "unknown.png", :class => "avatar", :title => comment.name, :size => "64x64"
+    %h1= comment.name
+  %p
+    = simple_format comment.content
+
+  %p.posted
+    - if comment.post
+      Comentado en
+      = link_to truncate(comment.post.title, 40), post_path(comment.post, :anchor => "comment_#{comment.id}")
+    - else
+      Sobre esta película
+    hace
+    = distance_of_time_in_words_to_now comment.created_at

@@ -1,0 +1,83 @@
+#content
+	#mievp
+		#category.widget
+			.top
+			.middle
+				%h3= @category.name
+				- if @category.posts.published.size == 0
+					%h4 Sin camoteadas publicadas.
+				- else	
+					- @category.posts.published.each do |post|
+						%h4= link_to post.title, post
+						.detail
+							%p
+								En
+								= link_to post.blog.name, post.blog
+								= h "por "
+								= link_to(post.user.full_name, post.user)
+								= h ", el #{post.published_at.to_date.strftime('%d-%b-%Y')}" unless post.published_at.nil?
+							%p
+								= summary_of(post.content, 140)
+								%b= link_to 'leer más', post
+							%br
+					.clear
+			.bottom
+#sidebar
+	#most_read_posts.widget
+		.top
+		.middle
+			%h3 Los Top
+			.detail
+			- @most_visited_blogs.each do |blog|
+				%p
+					= image_tag blog.user.avatar.url(:avatar)
+					= link_to blog.user.full_name, blog.user
+			.clear
+		.bottom
+	#most_visited_posts.widget
+		.top
+		.middle
+			%h3 Opiniones más visitadas
+			.detail
+			-			@most_visited_posts.each do |post|
+				%h4
+					= link_to post.title, post
+			.clear
+		.bottom
+	#most_commented_posts.widget
+		.top
+		.middle
+			%h3 Opiniones más comentadas
+			.detail
+			- @most_commented_posts.each do |post|
+				%h4
+					= link_to post.title, post
+			.clear
+		.bottom
+
+	#last_comments.widget
+		.top
+		.middle
+			%h3 Últimos comentarios
+			.detail
+			- @last_published_comments.each do |comment|
+				%p
+					= comment.name
+					= ' comentó en '
+					= link_to comment.post.blog.name, comment.post.blog
+					= ' sobre '
+					= link_to comment.post.title, comment.post
+					= ': '
+					= summary_of(comment.content, 140)
+				%br
+			.clear
+		.bottom
+		
+	#categories.widget
+		.top
+		.middle
+			%h3 Categorías
+			%p.short
+				= link_to 'Listar categorías', categories_path
+		.bottom
+

@@ -1,0 +1,16 @@
+
+%p
+  %b Opnión:
+  = h @comment.post.title
+%p
+  %b Autor:
+  = h @comment.name
+%p
+  %b Website:
+  = h @comment.website
+%p
+  %b Contenido:
+  = h @comment.content
+
+\#{link_to 'Regresar', comments_path}
+

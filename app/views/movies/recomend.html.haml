@@ -1,0 +1,12 @@
+#content 
+  #recomendation
+    .top
+    .middle
+      %h3 Recomiéndala a un amigo 
+      - semantic_form_for @recomendation, :url => send_recomend_movie_path(@recomendation.movie) do |f|
+        %ol
+          =f.input :email, :label => "Ingresa el correo de tu amigo"
+          =f.input :message, :label => 'Ingresa un comentario para tu amigo',:wrapper_html => {:class => "recomendation_text_area"}
+          =f.input :movie_id, :as => :hidden
+          =f.submit "Enviar"
+    .bottom

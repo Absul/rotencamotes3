@@ -1,0 +1,15 @@
+#content
+  = f.error_messages
+  #award_category.widget
+    .top
+    .middle
+      %h3 Categoría de premios
+      - f.inputs do
+        = f.input :name, :label => 'Nombre'
+      - f.buttons do
+        = f.commit_button commit_label
+      %p.short
+        = link_to 'Regresar', admin_award_categories_path
+    .bottom
+  .clear
+

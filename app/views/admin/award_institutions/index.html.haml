@@ -1,0 +1,27 @@
+#content
+  - @award_institutions.each do |award_institution|
+    #institution.widget
+      .top
+      .middle
+        %h3= h award_institution.name
+        %p
+          = link_to 'Editar', edit_admin_award_institution_path(award_institution)
+          = link_to 'Eliminar', [:admin, award_institution], :confirm => '¿Estás seguro?', :method => :delete
+        %p= image_tag award_institution.logo.url(:thumb)
+        %p= h award_institution.url
+        %h4
+          %b Descripción
+        %p= h award_institution.description
+        %h4
+          %b Historia
+        %p= h award_institution.bio
+      .bottom
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p
+        = link_to 'Nueva institución', new_admin_award_institution_path
+    .bottom
+

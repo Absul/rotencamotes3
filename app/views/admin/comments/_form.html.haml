@@ -1,0 +1,23 @@
+#content
+  = f.error_messages
+  #comment.widget
+    .top
+    .middle
+      %h3 Comentario
+      - f.inputs do
+        = f.input :post, :label => 'Opinión'
+        = f.input :email
+        = f.input :name, :label => 'Nombre'
+        = f.input :website
+        = f.input :content, :as => :text, :label => 'Contenido'
+        = f.input :featured, :as => :radio, :label => 'Resaltado'
+        = f.input :comment, :as => :hidden
+      - f.buttons do
+        = f.commit_button commit_label
+        %br
+        = f.input :status, :as => :select, :collection => Comment::STATUSES.values, :label => 'Estado'
+      %br
+      = link_to 'Regresar', admin_comments_path
+    .bottom
+  .clear
+

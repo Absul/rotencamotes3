@@ -1,0 +1,16 @@
+¡Hola <%= @author.name %>!
+
+Has recibido el siguiente comentario en tu entrada: <%= link_to @post.title, post_url(@post.to_param) %>:
+
+<% if @user %>
+	<%= link_to @user.name, user_url(@user) %>
+	dijo
+<% else %> 
+	<%= @comment.name %>
+<% end %>
+
+<blockquote>
+	<%= simple_format @comment.content %>
+</blockquote>
+
+Continua la conversación en los <%= link_to "comentarios para #{@post.title}", post_url(@post.to_param, :anchor => "comments") %>:

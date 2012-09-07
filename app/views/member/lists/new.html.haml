@@ -1,0 +1,13 @@
+#content
+  #list.widget
+    .top
+    .middle
+      %h3 Creando una lista
+      - semantic_form_for([:member, @list]) do |f|
+        = f.error_messages
+        = render 'form', {:f => f, :commit_label => 'Crear'}
+        .links
+          = link_to 'Regresar', user_path(current_user)
+    .bottom
+  .clear
+

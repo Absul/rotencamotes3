@@ -1,0 +1,57 @@
+#content
+  = f.error_messages
+  #person.widget
+    .top
+    .middle
+      %h3 Persona
+      - f.inputs do
+        = f.input :first_name, :label => 'Primer Nombre'
+        = f.input :middle_name, :label => 'Segundo Nombre'
+        = f.input :last_name, :label => 'Apellidos'
+        = f.input :born_at, :as => :date, :start_year => 1900, :label => 'Nacimiento'
+        = f.input :born_in, :as => :country, :label => 'Nacionalidad'
+      %br
+      - f.inputs do
+        = f.input :bio,     :as => :text, :label => 'Bio'
+      - f.buttons do
+        = f.commit_button commit_label
+      %br
+        = link_to 'Regresar', admin_people_path
+    .bottom
+  .clear
+#sidebar
+  #picture.widget
+    .top
+    .middle
+      %h3 Imagen
+      - f.inputs do
+        = image_tag(@person.picture.url(:thumb))
+        = f.input :picture, :as => :file, :label => 'Imagen'
+    .bottom
+  - unless @person.similars.empty?
+    #similars.widget
+      .top
+      .middle
+        %h3 Inconsistencias
+        %p.short
+          Duplicados por Nombre:
+          = @person.similars.count
+        %table.data
+          %tr{:class => cycle("even", "odd")}
+            %th Nombre
+            %th Nacido el
+            %th Nacido en
+          - @person.similars.each do |similar|
+            %tr{:class => cycle("even", "odd")}
+              %td= h link_to similar.short_name, similar
+              %td= h similar.try(:born_at).try(:strftime,"%d-%b-%Y")
+              %td= h similar.born_in
+              %td= link_to 'Editar', edit_admin_person_path(similar), :class => "edit"
+              %td= link_to 'Eliminar', [:admin, similar], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+        %br
+        - f.buttons do
+          = f.commit_button 'Corregir', :button_html => {:id => "absorb_button"}
+      .bottom
+
+  .clear
+

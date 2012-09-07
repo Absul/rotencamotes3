@@ -1,0 +1,17 @@
+#content
+  = f.error_messages
+  #character.widget
+    .top
+    .middle
+      %h3 Personaje de Película
+      - f.inputs do
+        = #f.input :movie, :label => 'Película', :collection => Movie.all(:order => :title)
+        = f.input :person, :label => 'Actor/Actriz', :collection => Person.all(:order => "first_name, last_name")
+        = f.input :character_name, :label => 'Personaje'
+      - f.buttons do
+        = f.commit_button commit_label
+      %br
+      = link_to 'Regresar', admin_movie_characters_path
+    .bottom
+  .clear
+

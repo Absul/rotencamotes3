@@ -1,0 +1,27 @@
+.score
+  - if activity.item.movie
+    .movie_poster
+      - link_to movie_path(activity.item.movie), :class => "movie tipsy", :title => "Ir a #{activity.item.movie.title}" do
+        = image_tag activity.item.movie.banner.url(:scheduled), :size => "40x60"   
+  .content
+    .general
+      = link_to activity.user.name, activity.user
+      calificó
+      = link_to activity.item.movie.title, activity.item.movie
+    .info
+      .rating
+        - if activity.item.from_expert?
+          = render_score activity.item.value
+        - else
+          - if activity.item.community_aproving_score?
+            .good
+              = activity.item.value
+          - else
+            .bad
+              = activity.item.value
+      .total
+        generando un puntaje final de
+        = render_score activity.item.movie.final_score
+    .date
+      hace
+      = distance_of_time_in_words_to_now activity.created_at

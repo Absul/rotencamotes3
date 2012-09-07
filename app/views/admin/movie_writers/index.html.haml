@@ -1,0 +1,28 @@
+#content
+  - @movies.each do |movie|
+    #movie_writers.widget
+      .top
+      .middle
+        %h3
+          Guionistas de
+          = movie.try(:title)
+        %table.data
+          %tr
+            %th Guionista
+          - movie.movie_writers.each do |movie_writer|
+            %tr
+              %td= h movie_writer.writer.try(:short_name)
+              %td= link_to 'Editar', edit_admin_movie_writer_path(movie_writer), :class => "edit"
+              %td= link_to 'Eliminar', [:admin, movie_writer], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+      .bottom
+    .clear
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p
+        = link_to 'Nuevo Guionista de Película', new_admin_movie_writer_path
+    .bottom
+  .clear
+

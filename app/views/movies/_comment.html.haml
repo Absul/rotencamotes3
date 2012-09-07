@@ -1,0 +1,31 @@
+%li{:class => score_icon(comment.score), :id =>"comment_#{comment.id}"}
+  .avatar
+    - if comment.user
+      - link_to comment.user, :class => "tipsy", :title => comment.user.name do
+        = image_tag comment.user.avatar.url(:avatar), :class => "avatar", :title => comment.user.name, :size => "64x64"
+        = comment.user.name
+    - else
+      = image_tag "unknown.png", :class => "avatar", :title => comment.name, :size => "64x64"
+      = comment.name
+  .talk
+    %p
+      = simple_format comment.content
+    - if current_user && current_user.admin?
+      = link_to "Editar", edit_admin_comment_path(comment), :class => "edit"
+
+  %p.posted
+    %span.share.comment_data
+      %iframe{:allowtransparency => "true", :frameborder => "0", :scrolling => "no", :src => "http://www.facebook.com/plugins/like.php?href=#{CGI::escape(movie_url(@movie))+"_comment_#{comment.id}"}&amp;layout=button_count&amp;show_faces=false&amp;width=80&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=40", :style => "border:none; overflow:hidden; width:80px; height:20px;margin-top:0px;"}
+
+    %span.comment_data.about
+      - if comment.post
+        Comentado en
+        = link_to truncate(comment.post.title, 40), post_path(comment.post, :anchor => "comment_#{comment.id}")
+      - else
+        Sobre esta película
+      hace
+      = distance_of_time_in_words_to_now comment.created_at
+
+    .clear
+  .clear
+

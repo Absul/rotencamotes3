@@ -1,0 +1,139 @@
+:javascript
+  function utmx_section(){}function utmx(){}
+  (function(){var k='3092759859',d=document,l=d.location,c=d.cookie;function f(n){
+  if(c){var i=c.indexOf(n+'=');if(i>-1){var j=c.indexOf(';',i);return escape(c.substring(i+n.
+  length+1,j<0?c.length:j))}}}var x=f('__utmx'),xx=f('__utmxx'),h=l.hash;
+  d.write('<sc'+'ript src="'+
+  'http'+(l.protocol=='https:'?'s://ssl':'://www')+'.google-analytics.com'
+  +'/siteopt.js?v=1&utmxkey='+k+'&utmx='+(x?x:'')+'&utmxx='+(xx?xx:'')+'&utmxtime='
+  +new Date().valueOf()+(h?'&utmxhash='+escape(h.substr(1)):'')+
+  '" type="text/javascript" charset="utf-8"></sc'+'ript>')})();
+  </script><script>utmx("url",'A/B');</script>
+  <!-- End of Google Website Optimizer Control Script -->
+  <!-- Google Website Optimizer Tracking Script -->
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['gwo._setAccount', 'UA-615279-5']);
+    _gaq.push(['gwo._trackPageview', '/3092759859/test']);
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+- content_for :banner do
+  #banner-cont.wrapper{:role => "banner"}
+    .banner
+      = render :partial => "banner"
+
+    .nav
+      %ul
+        %li{:class=>[active_if_showtime," showtime","tour_1"]}
+          = link_to "Cartelera", :url => {:action => "index", :filter => "estrenos"}, :complete =>"updateNav(this)", :remote => true
+        %li{:class=>[active_if_recommended," recommended","tour_2"]}
+          = link_to "Top Camotes", :url => {:action => "index", :filter => "recomendadas"}, :complete => "updateNav(this)", :remote => true
+        / %li{:class=>[active_if_now," now"]}
+        /  = link_to_remote "Recomendamos", :url => {:action => "index", :filter => "ahora"}, :complete => "updateNav(this)"
+      .loader
+        = image_tag "ajax_loader.gif", :size => "220x19"
+      .arrows
+        .prev
+        .next
+
+#content
+  #opiniones{:class => "tour_3"}
+
+    #wall.widget
+      .top
+      .middle
+        %h3 Lo último en Votencamotes
+        %ul= render :partial => "activity", :collection => @activities
+      .bottom
+
+    #posts.widget
+      .top
+      .middle
+        %h3 Camoteadas
+        %form
+          Filtrar por 
+          - %w(todos noticias opiniones entrevistas eventos trailers cortos versus premios).each do |category|
+            = link_to category, :url => {:action => :filter_posts, :filter => category }, :remote => true
+        .loader
+          = image_tag "ajax_loader.gif", :size => "220x19"
+
+        #post_collection= render :partial => "posts"
+      .bottom
+
+
+  #trailers_content
+    #trailers.widget
+      .top
+      .middle
+        %h3 
+          Ultimo trailer
+          .movie_trailer= truncate(@last.name_with_year,:lenght => 100)
+        = @last.trailers
+      .bottom
+        
+#sidebar
+
+  .widget
+    .top
+    .middle
+      %h3 Camotweets
+      = render :partial => "twitter"
+    .bottom
+    
+  .widget
+    .top
+    .middle
+      %h3{:class => "tour_5"}
+        Cartelera en
+        %span#city Lima
+      %form
+        %label{:for => "temas"} Mostrar la cartelera de
+        %select{:id => "temas"}
+          = options_from_collection_for_select(Theatre.cities,:last, :first)
+      .loader{:style => "width:100%"}
+        = image_tag "ajax_loader.gif", :size => "220x19"
+
+      %ul#scheduled_movies.cartelera
+        = render :partial => "scheduled_movie", :collection => @schedules, :locals => { :last => @schedules.size - 1}
+    .bottom
+    
+  .widget
+    .top
+    .middle
+      %h3{:class => "tour_8"} 
+        Las últimas Listas    
+      %ul
+        = render :partial => "list", :collection => @lists    
+    .bottom 
+          
+  .widget
+    .top
+    .middle
+      %h3 Se encamotaron
+      = render :partial => "facebook"
+      :erb
+        <script  type="text/javascript"  src="https://apis.google.com/js/plusone.js">
+          {lang:  'es'}
+        </script>
+        <div id = "gplus">
+        <g:plusone  href="http://www.votencamotes.com"></g:plusone>
+        </div>
+    .bottom
+.clear
+
+
+.talking
+  .top
+  .middle
+    %h3{:class => "tour_7"} Camoteando    
+    %ul
+      = render :partial => "comment", :collection => @comments
+      .clear
+    .conversations
+      = link_to "Lee todas las conversaciones", comments_path
+  .bottom
+

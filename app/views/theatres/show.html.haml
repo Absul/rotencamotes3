@@ -1,0 +1,28 @@
+- @onload = "initialize()"; @onunload = "GUnload()"
+#content
+  #schedule.widget
+    .top
+    .middle
+      %h3= "Cartelera de #{@theatre.name}"
+      %table.data
+        - @theatre.schedules.active.each do |schedule|
+          %tr{:class=>cycle("even","odd")}
+            %td= link_to schedule.movie.title, schedule.movie
+            %td= schedule.current_showtimes
+    .bottom
+#sidebar
+  #theatre.widget
+    .top
+    .middle
+      %h3 Acerca de
+      %p
+        = link_to image_tag(@theatre.movie_chain.logo(:medium)), @theatre.movie_chain
+      %h4= h @theatre.name
+      %h4= h @theatre.try(:address)
+      %h4= h @theatre.try(:city)
+      %h4= h @theatre.try(:state)
+      - if @theatre.lat
+        #gmaps= render "gmaps"
+      %h4= h @theatre.try(:phone)
+    .bottom
+

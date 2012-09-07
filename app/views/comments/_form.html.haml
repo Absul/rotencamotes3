@@ -1,0 +1,42 @@
+= f.error_messages
+
+- semantic_form_for @comment do |f|
+  - f.inputs do
+    - if current_user
+      %li.rating
+        %p Valoración
+        %label.camote{:for=>"camote", :title => "Me gustó"}
+          %span
+        %input.hide{:id=>"camote", :name=>"score_value", :type=>"radio", :value=>"5"}
+        %label.rotten{:for=>"rotten", :title => "No me gustó"}
+          %span
+        %input.hide{:id=>"rotten", :name=>"score_value", :type=>"radio", :value=>"1"}
+    - else
+      %li.invitation
+        = 'Valoración: Los usuarios registrados pueden dejar su valoración para las películas.'
+        = link_to 'Regístrate', new_user_registration_path
+        = " ó "
+        = link_to 'inicia sesión', new_user_session_path
+        = "para dejar tu valoración."
+
+    = f.input :content, :label => 'Comentario', :as => :text, :wrapper_html => {:class => "comment"}
+
+    - f.inputs do
+      - if @comment.post
+        = f.input :post_id, :as => :hidden, :value => @comment.post.id
+      - else
+        = f.input :movie_id, :as => :hidden, :value => @comment.movie.id
+    - if current_user
+      = f.input :name,  :as => :hidden, :value => current_user.full_name
+      = f.input :email, :as => :hidden, :value => current_user.email
+      = f.input :user_id, :as => :hidden, :value => current_user.id
+      %li
+        %label{:for=>"theatre_id"} La vi en
+        = select_tag 'theatre_id', options_for_select(Theatre.all.map{|t| [t.name, t.id]}), :id => "cine"
+
+    - else
+      = f.input :name,  :label => 'Nombre'
+      = f.input :email, :label => 'Email'
+  - f.buttons do
+    = f.commit_button 'Comentar'
+

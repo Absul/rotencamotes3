@@ -1,0 +1,15 @@
+#content
+  = f.error_messages
+  #genre.widget
+    .top
+    .middle
+      %h3 Género
+      - f.inputs do
+        = f.input :name, :label => 'Nombre'
+      - f.buttons do
+        = f.commit_button commit_label
+      %p
+        = link_to 'Regresar', admin_genres_path
+    .bottom
+  .clear
+

@@ -1,0 +1,30 @@
+#content
+  #comments.widget
+    .top
+    .middle
+      %h3 Comentarios
+      %table.data
+        %tr
+          %th En
+          %th Email
+          %th Contenido
+        - @comments.each do |comment|
+          %tr
+            %td= h comment.try(:post).try(:title)
+            %td= h comment.email
+            %td= h summary_of comment.content
+            %td= link_to 'Ver', [:admin, comment]
+            %td= link_to 'Editar', edit_admin_comment_path(comment), :class => "edit"
+            %td= link_to 'Eliminar', [:admin, comment], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+    .bottom
+  .clear
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p
+        = link_to 'Nuevo comentario', new_admin_comment_path
+    .bottom
+  .clear
+

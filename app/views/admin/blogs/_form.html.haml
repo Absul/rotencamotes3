@@ -1,0 +1,33 @@
+#content
+  = f.error_messages
+  #blog.widget
+    .top
+    .middle
+      %h3 Blog
+      - f.inputs do
+        %p=  f.input :name, :label => 'Nombre'
+        = f.input :user, :label => 'Autor'
+        %p= f.input :description, :as => :text, :label => 'Descripción'
+        %br
+        = f.input :category, :label => 'Categoría'
+        %br
+        = f.input :active, :label => 'Activo', :hint => "Aquellos inactivos no aparecerán en portada"
+        = f.input :permalink, :hint => "En caso no utilizar ninguno, se generará automáticamente según el nombre"
+      - f.buttons do
+        = f.commit_button commit_label
+      %br
+      = link_to 'Regresar', admin_blogs_path
+    .bottom
+  .clear
+#sidebar
+  #image.widget
+    .top
+    .middle
+      %h3 Banner
+      - f.inputs do
+        = image_tag @blog.banner.url(:thumbnail)
+        = f.input :banner,  :as => :file, :label => 'Modificar'
+      .clear
+    .bottom
+  .clear
+

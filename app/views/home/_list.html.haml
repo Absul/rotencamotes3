@@ -1,0 +1,13 @@
+%li.list
+  - if list.user_id
+    .movie_poster
+      - link_to list.user, :class => "movie tipsy", :title => list.user.name do
+        = image_tag list.user.avatar.url(:avatar), :size => "60x60"   
+  .content
+    .general
+      %p= link_to list.title, list
+      %h4= link_to list.user.name, list.user      
+    .info
+      %p
+        = truncate list.description, :lenght => 90
+        = link_to "Ver más", list

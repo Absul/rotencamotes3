@@ -1,0 +1,20 @@
+
+%h1 Listing profiles
+%table.data
+  %tr
+    %th User
+    %th Current location
+    %th Favorite movie character
+    %th Favorite movie line
+  - @profiles.each do |profile|
+    %tr
+      %td= h profile.user.full_name
+      %td= h profile.current_location
+      %td= h profile.favorite_movie_character
+      %td= h profile.favorite_movie_line
+      %td= link_to 'Show', [:admin, profile]
+      %td= link_to 'Edit', edit_admin_profile_path(profile)
+      %td= link_to 'Destroy', [:admin, profile], :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New profile', new_admin_profile_path
+

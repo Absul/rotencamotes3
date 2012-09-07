@@ -1,0 +1,37 @@
+#content
+  #active_blogs.widget
+    .top
+    .middle
+      %h3 Blogs activos
+      %table.data
+        - Blog.active.each do |blog|
+          %tr{:class=>cycle("even","odd")}
+            %td= h link_to blog.name, blog
+            %td= h blog_posts_count blog
+            %td= h blog_visits_count blog
+            %td= link_to 'Editar', edit_admin_blog_path(blog), :class => "edit"
+            %td= link_to 'Eliminar', [:admin, blog], :confirm => 'Are you sure?', :method => :delete, :class => "delete"
+    .bottom
+  #active_blogs.widget
+    .top
+    .middle
+      %h3 Blogs inactivos
+      %table.data
+        - Blog.inactive.each do |blog|
+          %tr{:class=>cycle("even","odd")}
+            %td= h link_to blog.name, blog
+            %td= h blog_posts_count blog
+            %td= h blog_visits_count blog
+            %td= link_to 'Ver', [:admin, blog]
+            %td= link_to 'Editar', edit_admin_blog_path(blog), :class => "edit"
+            %td= link_to 'Eliminar', [:admin, blog], :confirm => 'Are you sure?', :method => :delete, :class => "delete"
+    .bottom
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p.short
+        = link_to 'Nuevo blog', new_admin_blog_path
+    .bottom
+

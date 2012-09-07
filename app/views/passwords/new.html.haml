@@ -1,0 +1,12 @@
+#content.sessions
+  #opiniones
+  
+  - widget_tag do
+    %h2 ¿Olvidaste tu contraseña?
+    %h3 No es problema, nos pasa a todos
+    - form_for resource_name, resource, :url => password_path(resource_name) do |f|
+      = f.error_messages
+      %p= f.label :email, "Ingresa el correo con el que te registraste"
+      %p= f.text_field :email
+      %p= f.submit "Enviarme instrucciones para crear una nueva", :class => "create"
+    = render :partial => "shared/devise_links"

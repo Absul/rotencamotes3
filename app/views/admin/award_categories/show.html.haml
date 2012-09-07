@@ -1,0 +1,15 @@
+#content
+  #award_category.widget
+    .top
+    .middle
+      %h3 Categoría de Premio
+      %p
+        = link_to 'Editar', edit_admin_award_category_path(@award_category)
+      %p
+        %b Nombre:
+        = h @award_category.name
+      %p
+        = link_to 'Regresar', admin_award_categories_path}
+    .bottom
+  .clear
+

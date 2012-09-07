@@ -1,0 +1,44 @@
+- if movie.movie
+  #movie.widget
+    .top
+    .middle
+      .movie
+        .poster
+          = image_tag movie.movie.banner.url(:banner)
+      .detail
+        %h3= link_to movie.movie.name_with_year, movie.movie
+        - if are_you?(movie.list.user)
+          = link_to "Eliminar de la lista", ["member",movie.list, movie], :method => "delete", :confirm => "¿Seguro que deseas eliminarla de tu lista?"
+        .spec
+          - if movie.movie.studio
+            %p.short
+              %strong Estudio:
+              %span= link_to movie.movie.studio.name, movie.movie.studio
+          - if movie.movie.original_title
+            %p.short
+              %strong Título original:
+              %span= movie.movie.original_title
+          %p.short
+            %strong Acerca de:
+            %span.movie_summary= strip_tags movie.movie.summary
+          #rating
+            .rotten
+              .points= movie.movie.bad_scores
+            .content
+              .porcentaje= render_score movie.movie.final_score
+              .opiniones
+                Críticas:
+                = movie.movie.posts.size
+              / .stars
+              /   .fill{:style=>"width:#{number_to_percentage(@movie.final_score, :precision => 0)}"}
+              .coments
+                Comentarios:
+                = movie.movie.comments.size
+            .bar
+              .fill{:style=>"width:#{number_to_percentage(movie.movie.final_score, :precision => 0)}"}
+            .camote
+              .points= movie.movie.good_scores
+
+    .bottom
+  .clear
+

@@ -1,0 +1,10 @@
+.talking
+  .top
+  .middle
+    %h3 Conversaciones en VotenCamotes
+    %ul
+      = render :partial => "home/comment", :collection => @comments
+      .clear
+    .pagination= will_paginate @comments
+  .bottom
+

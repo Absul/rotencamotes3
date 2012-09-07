@@ -1,0 +1,34 @@
+#content
+  #ads.widget
+    .top
+    .middle
+      %h3 Avisos de publicidad
+      %table.data
+        %tr
+          %th Nombre
+          %th Campaña
+          %th Desde
+          %th Hasta
+          %th Ubicación
+        - @ads.each do |ad|
+          %tr
+            %td= h ad.name
+            %td= h ad.campaign
+            %td= h ad.started_at.try(:strftime, '%d-%b-%Y')
+            %td= h ad.finished_at.try(:strftime, '%d-%b-%Y')
+            %td= h ad.place
+            %td= link_to 'Ver', [:admin, ad]
+            %td= link_to 'Editar', edit_admin_ad_path(ad), :class => "edit"
+            %td= link_to 'Eliminar', [:admin, ad], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+    .bottom
+  .clear
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p
+        = link_to 'Nuevo Aviso', new_admin_ad_path
+    .bottom
+  .clear
+

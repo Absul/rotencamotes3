@@ -1,0 +1,21 @@
+#content
+  #award_categories.widget
+    .top
+    .middle
+      %h3 Categorías de premios
+      %table.data
+        - @award_categories.each do |award_category|
+          %tr{:class => cycle("even", "odd")}
+            %td= h award_category.name
+            %td= link_to 'Editar', edit_admin_award_category_path(award_category), :class => "edit"
+            %td= link_to 'Eliminar', [:admin, award_category], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p.short
+        = link_to 'Nueva categoría de premios', new_admin_award_category_path
+    .bottom
+  .clear
+

@@ -1,0 +1,21 @@
+#content
+  #reply.widget
+    .top
+    .middle
+      %h3 
+        Agregando comentario sobre
+        - if @comment.post
+          = " opinión #{@comment.post.title}"
+        - else
+          = " película #{@comment.movie.title}"
+
+      - if current_user
+        %h2=  "De #{@comment.user.full_name}"
+      - semantic_form_for(@comment) do |f|
+        = render 'form', {:f => f, :commit_label => 'Crear'}
+      - if @comment.post
+        = link_to 'Regresar', post_path(@comment.post)
+      - else
+        = link_to 'Regresar', movie_path(@comment.movie)
+    .bottom
+

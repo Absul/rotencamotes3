@@ -1,0 +1,55 @@
+#content
+  - @theatres.each do |theatre|
+    #watch.widget
+      .top
+      .middle
+        %h3
+          = link_to theatre.name, theatre
+          = link_to image_tag(theatre.movie_chain.logo.url(:small)), theatre.movie_chain
+        %table.data
+          - theatre.schedules.active.each do |schedule|
+            %tr{:class=>cycle("even","odd")}
+              %td
+                %h4= link_to schedule.movie.title, schedule.movie
+              %td= schedule.current_showtimes
+      .bottom
+  .clear
+
+
+/ #sidebar
+/   - widget_tag "Cartelera" do
+/     .detail
+/       - Movie.on_theatres.each do |movie|
+/         %p.short
+/           %strong= link_to movie.name_with_year, movie
+/       %p.short
+/         = link_to 'Listar géneros', genres_path
+/       .clear
+/ .clear
+/ 
+
+#sidebar
+  .widget
+    .top
+    .middle
+      %h3= "Cartelera de la semana"
+      %ul.cartelera
+        - Movie.on_theatres.each do |movie|
+          %li
+            - link_to movie, :class => "movie", :title => movie.title do
+              = image_tag movie.banner.url(:scheduled)
+            .desc
+              = link_to movie.title, movie, :class => "title", :title => movie.title
+              %p.tags
+                - movie.genres.each do |genre|
+                  = link_to genre.name, genre, :title => genre.name, :class => "title"
+              = link_to "Opiniones (#{movie.posts.size})", movie_posts_path(movie)
+            %p.rating= render_score movie.final_score
+            .clear
+      %p.short
+        = link_to 'Listar géneros', genres_path
+            
+    .bottom
+.clear
+
+

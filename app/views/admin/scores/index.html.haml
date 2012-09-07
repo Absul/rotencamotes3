@@ -1,0 +1,31 @@
+#content
+  #scores.widget
+    .top
+    .middle
+      %h3 Valoraciones
+      %table.data
+        %tr
+          %th Película
+          %th Usuario
+          %th Fecha
+          %th Fuente
+          %th Valor
+        - @scores.each do |score|
+          %tr
+            %td= h score.try(:movie).try(:title)
+            %td= h score.user.name
+            %td= h score.scored_at.strftime('%d-%b-%Y')
+            %td= h score.source
+            %td= h score.value
+            %td= link_to 'Editar', edit_admin_score_path(score), :class => "edit"
+            %td= link_to 'Eliminar', [:admin, score], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+    .bottom
+  .clear
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p
+        = link_to 'Nueva valoración', new_admin_score_path
+

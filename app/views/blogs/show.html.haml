@@ -1,0 +1,59 @@
+#content
+	#posts.widget
+		.top
+		.middle
+			.detail
+				%h3 Últimas camoteadas
+				- @blog.posts.last_published.each do |post|
+					.post
+						- if post.movie
+							.movie_poster
+								- link_to movie_path(post.movie), :class => "movie tipsy", :title => "Ir a #{post.movie.title}" do
+									= image_tag post.movie.banner.url(:scheduled) 
+						.movie_post{:class => ("large" if not post.movie_id)}
+							%h4= link_to post.title_with_score, post
+							.detail
+								%p.about_post
+									En
+									= link_to post.blog.name, post.blog
+									por
+									= link_to(post.user.full_name, post.user)
+									= ", el #{post.published_at.to_date.strftime('%d-%b-%Y')}"
+								%p
+									- size = post.movie_id? ? 300 : 400
+									= summary_of(post.content, size)
+									%b= link_to 'leer más', post
+								%br
+		.bottom
+#sidebar
+	#movie.widget.blogger
+		.top
+		.middle
+			.movie
+				= avatar_tag(@blog.user)
+				.clear
+			.detail
+				.spec
+					%p.short
+						%h4.blog_name
+							= @blog.name
+					%p.short
+						%h4.author
+							= 'Por '
+							= link_to h(@blog.user.full_name), @blog.user
+					%p.short
+						.author_bio
+							= summary_of h @blog.description
+			.clear
+		.bottom
+	#subscribe.widget
+		.top
+		.middle
+			%h3 Suscribirse
+			.detail
+				%p
+					=link_to "A&ntilde;adir este sitio", blog_path(@blog.id,:format=>"atom")
+		.bottom
+
+.clear
+

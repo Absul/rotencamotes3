@@ -1,0 +1,34 @@
+#content
+  - @genres.each do |genre|
+    - if not genre.movies.empty?
+      #genre.widget
+        .top
+        .middle
+          %h3= link_to genre.name, genre
+          - genre.movies.each do |movie|
+            %p.short
+              - if movie.title
+                = link_to movie.name_with_year, movie
+        .bottom
+  = will_paginate @genres
+#sidebar
+  .widget
+    .top
+    .middle
+      %h3= "Cartelera"
+      %ul.cartelera
+        - Movie.on_theatres.each do |movie|
+          %li
+            - link_to movie, :class => "movie", :title => movie.title do
+              = image_tag movie.banner.url(:scheduled)
+            .desc
+              = link_to movie.title, movie, :class => "title", :title => movie.title
+              %p.tags
+                - movie.genres.each do |genre|
+                  = link_to genre.name, genre, :title => genre.name, :class => "title"
+              = link_to "Opiniones (#{movie.posts.size})", movie_posts_path(movie)
+            %p.rating= render_score movie.final_score
+            .clear
+    .bottom
+.clear
+

@@ -1,0 +1,30 @@
+#reply.widget
+  .top
+  .middle
+    %h3 He visto esta película
+    - semantic_form_for @comment do |f|
+      - f.inputs do
+        %li.rating
+          %p Votación
+          %label.camote{:for=>"pop_camote", :title => "Me gustó", :class => "tipsy"}
+            %span
+          %input.hide{:id=>"pop_camote", :name=>"score_value", :type=>"radio", :value=>"5"}
+          %label.rotten{:for=>"pop_rotten", :title => "No me gustó", :class => "tipsy"}
+            %span
+          %input.hide{:id=>"pop_rotten", :name=>"score_value", :type=>"radio", :value=>"1"}
+        %li.where
+          %label{:for=>"theatre_id"} La vi en
+          = select_tag 'theatre_id', grouped_options_for_select(places_to_watch, nil, "Selecciona..."), {:id => "cine", :include_blank => true}
+        %li
+          = link_to '¡Hey! También quiero comentar', "#", :id => "score_comment"
+        = f.input :content, :label => 'Comentario', :as => :text, :wrapper_html => {:class => "comment hidden"}
+      - f.inputs do
+        = f.input :movie_id, :as => :hidden, :value => @movie.id
+        = f.input :name,  :as => :hidden, :value => current_user.full_name
+        = f.input :email, :as => :hidden, :value => current_user.email
+        = f.input :user_id, :as => :hidden, :value => current_user.id
+      - f.buttons do
+        = f.commit_button 'Enviar'
+
+  .bottom
+

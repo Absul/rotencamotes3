@@ -1,0 +1,77 @@
+#content
+	= f.error_messages
+	#movie_info.widget
+		.top
+		.middle
+			%h3 Película
+			- f.inputs do
+				= f.input :title, :label => 'Título'
+				= f.input :original_title, :label => 'Título original'
+				%br
+				= f.input :language,	:as => :select, :collection => Movie::LANGUAGES.values, :label => 'Idioma'
+
+				= f.input :summary, :as => :text, :label => 'Acerca de'
+				= f.input :synopsis, :as => :text, :label => 'Sinopsis'
+				= f.input :studio, :label => 'Estudio'
+				%br
+				= f.input :plain_cast, :label => "Actores y personajes"
+				= f.input :plain_directors, :label => "Directores"
+				= f.input :plain_writers, :label => "Escritores"
+				= f.input :released_at, :as => :date, :start_year => 1900, :label => 'Fecha de estreno'
+				= f.input :lenght, :as => :numeric, :label => 'Duración (minutos)'
+				= f.input :website, :label => 'Website'
+				= f.input :country, :as => :country, :label => 'País'
+				%br
+				= f.input :trailers, :as => :text, :label => 'Trailer', :hint => 'Pegue aquí el código iframe de youtube (width=500 y height=300)'
+				%br
+				= f.input :mpaa_rate, :as => :select, :collection => Movie::MPAA_RATES.values, :label => 'Clasificación MPAA'
+				= f.input :cached_tag_list, :as => :text, :label => 'Etiquetas'
+			= link_to 'Regresar', admin_movies_path
+		.bottom
+	.clear
+#sidebar
+	#actions.widget
+		.top
+		.middle
+			%h3 Acciones
+			- f.buttons do
+				= f.commit_button commit_label
+		.bottom
+	#banner.widget
+		.top
+		.middle
+			%h3 Banner
+			- f.inputs do
+				= image_tag @movie.banner.url(:thumb)
+				= f.input :banner, :as => :file, :label => 'Modificar'
+		.bottom
+	#genres.widget
+		.top
+		.middle
+			%h3 Géneros
+			%p Marque los géneros para la película
+			- f.inputs do
+				= f.input :genres, :as => :check_boxes, :label => ''
+		.bottom
+	- unless @movie.similars.empty?
+		#similars.widget
+			.top
+			.middle
+				%h3 Inconsistencias
+				%p.short 
+					Coincidencias/similitudes en título:
+					= @movie.similars.count
+				%table.data
+					%tr{:class => cycle("even", "odd")}
+						%th Título
+						%th Estreno
+					- @movie.similars.each do |similar|
+						%tr{:class => cycle("even", "odd")}
+							%td= h link_to similar.title, similar
+							%td= h similar.name_with_year
+							%td= link_to 'Editar', edit_admin_movie_path(similar), :class => "edit"
+							%td= link_to 'Eliminar', [:admin, similar], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+							%td= link_to 'Absorber', absorb_admin_movie_path(@movie, similar), :confirm => '¿Estás seguro?'
+			.bottom
+	.clear
+

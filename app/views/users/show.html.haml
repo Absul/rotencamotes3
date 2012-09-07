@@ -1,0 +1,190 @@
+#content
+  #movie.widget
+    .top
+    .middle
+      .movie
+        .poster
+          - unless @user.avatar.nil?
+            = image_tag @user.avatar.url(:banner)
+      .detail
+        
+        /  Perfil de
+        - if @user.full_name.blank? && are_you?
+          No has ingresado tu nombre aún
+          = link_to "¿Qué esperas?", edit_user_path(@user)
+        - else
+          %h3= @user.try(:name)
+        .spec
+        - if are_you?
+          %p.short
+            = link_to 'Editar', edit_user_path(@user)
+        /%p.short
+        /  %strong Nombre:
+        /  = h @user.try(:first_name)
+        /%p.short
+        /  %strong Apellido:
+        /  = h @user.try(:last_name)
+        /  - if @user.full_name.blank? && are_you?
+        /    No has ingresado tu nombre aún
+        /    = link_to "¿Qué esperas?", edit_user_path(@user)
+        /%p.short
+        /  %strong Actualmente en:
+        /  = h @user.profile.friendly_current_location
+        /%p.short
+        /  %strong Bio en una línea:
+        /  = h @user.try(:one_line_bio)
+        %p.short         
+          = simple_format @user.bio
+        %p.short
+          /%strong Sitio Web:
+          - if @user.url
+            = h link_to @user.url, @user.url
+      .clear
+    .bottom
+  #preferences.widget
+    .top
+    .middle
+      %h3 Favoritos
+      %p.short
+        %strong Género:
+        = h @user.profile.friendly_favorite_genre
+      %p.short
+        %strong Personaje de película:
+        = h @user.profile.friendly_favorite_movie_character
+      %p.short
+        %strong Frase de película:
+        = h @user.profile.friendly_favorite_movie_line
+      %p.short
+        %strong Actor:
+        = h @user.profile.favorite_actor_name
+      %p.short
+        %strong Director:
+        = h @user.profile.favorite_director_name
+      %p.short
+        %strong Guionista:
+        = h @user.profile.favorite_writer_name
+      .clear
+    .bottom
+
+  #lists.widget
+    .top
+    .middle
+      %h3 Listas del usuario 
+      - if are_you?
+        = link_to "Crear nueva lista", new_member_list_path, :class => "add"
+      %ul.cartelera
+        - @user.lists.each do |list|
+          %li
+            .desc
+              - link_to list, :class => "list", :title => list.title do
+                = truncate(list.title,30)
+              - if are_you?
+                = link_to "Editar", edit_member_list_path(list), :class => "edit"
+              .items
+                - if list.items.of_movies.empty?
+                  Esta lista está vacía por ahora
+                - if list.items.of_movies.size > 7
+                  .summary
+                    Esta lista incluye películas como 
+                    = list.items.of_movies[0..4].map(&:movie).map{|m| link_to m.title, m, :title => m.title }.to_sentence #join(", ")
+                    = link_to "Ver todas", list, :class => "expand_movie_list"
+                    - bigger = true
+                - list.items.of_movies.each do |item|
+                  .movie{:class => (bigger ? "hidden" : "")}
+                    .poster
+                      - link_to movie_path(item.movie), :class => "movie tipsy", :title => item.movie.title do
+                        = image_tag item.movie.banner.url(:scheduled) 
+      .clear
+    .bottom
+
+  #movies_seen.widget
+    .top
+    .middle
+      %h3 Películas vistas
+      %ul.cartelera
+        - @user.seen_movies.each do |movie|
+          %li
+            - link_to movie, :class => "movie tipsy", :title => movie.title do
+              = image_tag movie.banner.url(:scheduled)
+            .desc
+              = link_to truncate(movie.title,30), movie, :class => "title", :title => movie.title
+              .final_score= render_score(movie.final_score)
+              %p.tags
+                - movie.genres.each do |genre|
+                  = link_to genre.name, genre, :title => genre.name, :class => "title"
+              = link_to "Opiniones (#{movie.related_comments})", movie_posts_path(movie)
+              
+      %a.facebook{:href=>"http://www.facebook.com/sharer.php?u=#{user_url(@user)}&t=#{URI.encode("Las películas que he visto - VotenCamotes.com :: #{@user.full_name}")}"}
+        Compartir estas películas en Facebook
+      
+      .clear
+    .bottom
+    
+#sidebar
+  -if @user.expert? && @user.has_published_posts?
+    #posts.widget
+      .top
+      .middle
+        %h3 Últimas opiniones
+        - @user.posts.last_published.each do |post|
+          %div
+            - if post.movie
+              .movie_poster
+                - link_to post.movie, :class => "movie tipsy", :title => post.movie.title do
+                  = image_tag post.movie.banner.url(:scheduled)
+            En
+            = link_to post.blog.name, post.blog
+            = ":"
+            = link_to post.title, post
+            el
+            = truncate(strip_tags(post.content),150)
+            = post.published_at.to_s(:short)  #strftime('%d-%b-%Y')
+          %br
+      .bottom
+  - if @user.has_comments?
+    #comments.widget
+      .top
+      .middle
+        %h3 Comentarios
+        - @user.comments.last_published.find(:all, :include => [:movie, :post]).each do |comment|
+          %p
+            - if comment.post
+              - if comment.post.movie
+                - link_to comment.post.movie, :class => "movie tipsy", :title => comment.post.movie.title do
+                  = image_tag comment.post.movie.banner.url(:scheduled)
+              En
+              = link_to comment.post.blog.name, comment.post.blog
+              sobre
+              = link_to comment.post.title, comment.post
+              = summary_of(comment.content, 140)
+              = link_to 'Ver más', comment.post
+            - else
+              - if comment.movie
+                - link_to comment.movie, :class => "movie tipsy", :title => comment.movie.title do
+                  = image_tag comment.movie.banner.url(:scheduled)            
+                Sobre
+                = link_to comment.movie.title, comment.movie
+                = summary_of(comment.content, 140)
+                = link_to 'Ver más', comment.movie
+
+          %br
+      .bottom
+  - else
+    - if are_you?
+      #last_posts.widget
+        .top
+        .middle
+          %h3 Comentarios
+          %p
+            Anímate a comentar, estas opiniones estan a la espera de tus comentarios:
+          %br
+          - Post.last_published(5).each do |post|
+            %p
+              = link_to post.title, post
+              = 'en'
+              = link_to post.blog.name, post.blog
+            %br
+        .bottom
+
+.clear
+

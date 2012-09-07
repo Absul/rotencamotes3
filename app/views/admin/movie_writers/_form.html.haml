@@ -1,0 +1,16 @@
+#content
+  = f.error_messages
+  #writer.widget
+    .top
+    .middle
+      %h3 Guionista de Película
+      - f.inputs do
+        = #f.input :movie, :label => 'Película', :collection => Movie.all(:order => :title)
+        = f.input :writer, :label => 'Guionista', :collection => Person.all(:order => "first_name, last_name")
+      - f.buttons do
+        = f.commit_button commit_label
+      %br
+      = link_to 'Regresar', admin_movie_writers_path
+    .bottom
+  .clear
+

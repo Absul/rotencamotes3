@@ -1,0 +1,38 @@
+%ul{"data-role"=>"listview"}  
+  %li{"data-role" => "list-divider"} Detalle de la película  
+  %li
+    = image_tag @movie.banner.url(:scheduled), :title => @movie.title, :alt => @movie.title
+    %h3= @movie.name_with_year
+    - if @movie.summary
+      %div
+        = strip_tags @movie.summary
+    %br
+    %p= strip_tags @movie.synopsis  
+    %h1{:class => "ui-li-aside"}= render_score @movie.final_score
+    - if @movie.original_title
+      %h2 Título original:
+      %p= @movie.original_title
+
+  %li{"data-role" => "list-divider"} Horarios
+  %li
+    - @scheduled_theatres_for_movie.each do |theatre|
+      %h4= theatre.name
+      %p
+        - Schedule.active.from_theatre(theatre.id).from_movie(@movie.id).each do |schedule|
+          = schedule.description
+          = schedule.current_showtimes
+
+  %li{"data-role" => "list-divider"} Mapa
+  %li
+    %h1
+    %p Trataremos de identificar según su posición qué cines tienen esta película
+    %p#status
+    #gmap
+        
+  - unless @movie.posts.empty?
+    %li{"data-role" => "list-divider"} Opiniones
+    = render :partial => "post", :collection => @movie.posts
+
+  - unless @movie.comments.empty?
+    %li{"data-role" => "list-divider"} Comentarios
+    = render :partial => "comment", :collection => @movie.comments.paginate(:page => params[:page])

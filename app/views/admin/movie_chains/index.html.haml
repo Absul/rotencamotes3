@@ -1,0 +1,22 @@
+#content
+  - @movie_chains.each do |movie_chain|
+    #chain.widget
+      .top
+      .middle
+        %h3= movie_chain.name
+        %p= image_tag movie_chain.logo.url(:thumb)
+        %p
+          = link_to 'Ver', [:admin, movie_chain]
+          = link_to 'Editar', edit_admin_movie_chain_path(movie_chain)
+          = link_to 'Eliminar', [:admin, movie_chain], :confirm => '¿Estás seguro?', :method => :delete
+        %p= summary_of(movie_chain.bio)
+      .bottom
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      = link_to 'Nueva cadena de cines', new_admin_movie_chain_path
+    .bottom
+  .clear
+

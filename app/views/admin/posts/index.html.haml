@@ -1,0 +1,62 @@
+#content
+  #published_posts.widget
+    .top
+    .middle
+      %h3 Opiniones publicadas
+      - if Post.published.active.empty?
+        %p Sin opiniones publicadas
+      - else
+        %table.data
+          - Post.published.active.each do |post|
+            %tr
+              %td
+                = h link_to post.title, post
+                en
+                = h link_to post.blog.name, post.blog
+              %td= link_to 'Editar', edit_admin_post_path(post), :class => "edit"
+              %td= link_to 'Eliminar', [:admin, post], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+    .bottom
+  #reviewed_posts.widget
+    .top
+    .middle
+      %h3 Opiniones revisadas
+      - if Post.reviewed.active.empty?
+        %p Sin opiniones revisadas
+      - else
+        %table.data
+          - Post.reviewed.active.each do |post|
+            %tr
+              %td
+                = h link_to post.title, post
+                en
+                = h link_to post.blog.name, post.blog
+              %td= link_to 'Editar', edit_admin_post_path(post), :class => "edit"
+              %td= link_to 'Eliminar', [:admin, post], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+    .bottom
+  #drafted_posts.widget
+    .top
+    .middle
+      %h3 Opiniones en borrador
+      - if Post.drafted.active.empty?
+        %p Sin opiniones en borrador
+      - else
+        %table.data
+          - Post.drafted.active.each do |post|
+            %tr
+              %td
+                = h link_to post.title, post
+                en
+                = h link_to post.blog.name, post.blog
+              %td= link_to 'Editar', edit_admin_post_path(post), :class => "edit"
+              %td= link_to 'Eliminar', [:admin, post], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+    .bottom
+  .clear
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p.short= link_to 'Nueva opinión', new_admin_post_path
+    .bottom
+  .clear
+

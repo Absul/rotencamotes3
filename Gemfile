@@ -5,7 +5,9 @@ gem 'rails', '~>3.1.0'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+#gem 'sqlite3'
+
+gem 'mysql2'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -43,7 +45,7 @@ gem 'omniauth-facebook'
 # 
 # gem 'formtastic', '~> 1.1.0'
 # gem 'will_paginate', '~> 2.3.11'
-# gem 'haml'
+gem 'haml'
 
 
 # gem "inherited_resources", "~> 1.0.6"

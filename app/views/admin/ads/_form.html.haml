@@ -1,0 +1,19 @@
+#content
+  = f.error_messages
+  #ad.widget
+    .top
+    .middle
+      %h3 Aviso
+      - f.inputs do
+        = f.input :name, :label => 'Nombre'
+        = f.input :campaign, :label => 'Campaña'
+        = f.input :content,     :as => :text, :label => 'Contenido'
+        = f.input :started_at,  :as => :date, :Label => 'Desde'
+        = f.input :finished_at, :as => :date, :label => 'Hasta'
+        = f.input :place,       :as => :select, :collection => Ad::PLACES.values, :label => 'Ubicación'
+      - f.buttons do
+        = f.commit_button commit_label
+      %br
+      = link_to 'Regresar', admin_ads_path
+      .clear
+    .bottom

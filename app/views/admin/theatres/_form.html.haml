@@ -1,0 +1,31 @@
+#content
+  - @onload = "initialize()"; @onunload = "GUnload()"
+  = f.error_messages
+  #theatre.widget
+    .top
+    .middle
+      %h3
+        Cine para
+        = @theatre.movie_chain.name
+      - f.inputs do
+        = #f.input :movie_chain_id, :as => :hidden, :value => @theatre.movie_chain_id
+        = f.input :lat, :as => :hidden, :value => @theatre.lat
+        = f.input :long, :as => :hidden, :value => @theatre.long
+        = f.input :name, :label => 'Nombre'
+        = f.input :address, :label => 'Dirección'
+        = f.input :city, :label => 'Distrito'
+        = f.input :state, :label => 'Provincia'
+        = f.input :phone, :label => 'Teléfono'
+      - f.buttons do
+        = f.commit_button "Ubicar", :button_html => {:id => "find_me"}
+      - lat, long = "-12.09726", "-77.03503"
+      - lat, long = @theatre.lat, @theatre.long unless @theatre.lat.blank?
+      = render :partial => 'gmaps', :locals => {:lat => lat, :long => long}
+      %p.inline-hints Haga click en el lugar donde está el cine
+      - f.buttons do
+        = f.commit_button commit_label
+      %br
+      = link_to "Regresar a #{@theatre.movie_chain.name} ", [:admin, @theatre.movie_chain]
+    .bottom
+  .clear
+

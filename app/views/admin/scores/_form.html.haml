@@ -1,0 +1,21 @@
+#content
+  = f.error_messages
+  #score.widget
+    .top
+    .middle
+      %h3 Valoración
+      - f.inputs do
+        %li
+          %label Película
+          = @score.try(:movie).try(:name_with_year)
+        = f.input :user, :label => 'Usuario'
+        = f.input :scored_at, :as => :date, :label => 'Fecha'
+        = f.input :source, :as => :select, :collection => Score::SOURCES.values, :label => 'Fuente'
+        = f.input :value, :as => :numeric, :label => 'Valor'
+      - f.buttons do
+        = f.commit_button commit_label
+      %br
+      = link_to 'Regresar', admin_scores_path
+    .bottom
+  .clear
+

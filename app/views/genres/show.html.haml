@@ -1,0 +1,65 @@
+#content
+  - Movie.from_named_genre(@genre.name).each do |movie|
+    #movie.widget
+      .top
+      .middle
+        .movie
+          .poster
+            = image_tag movie.banner.url(:banner)
+        .detail
+          %h3= link_to movie.name_with_year, movie
+          .spec
+            - if movie.studio
+              %p.short
+                %strong Estudio:
+                %span= link_to movie.studio.name, movie.studio
+            - if movie.original_title
+              %p.short
+                %strong Título original:
+                %span= movie.original_title
+            %p.short
+              %strong Acerca de:
+              %span.movie_summary= strip_tags movie.summary
+          #rating
+            .rotten
+            .content
+              .porcentaje= render_score movie.final_score
+              .stars
+                .fill{:style=>"width:#{number_to_percentage(movie.final_score, :precision => 0)}"}
+              .coments
+                Comentarios: 
+                = movie.comments.size
+            .bar
+              .fill{:style=>"width:#{number_to_percentage(movie.final_score, :precision => 0)}"}
+            .camote              
+        .clear
+      .bottom
+  .clear
+
+#sidebar
+  .widget
+    .top
+    .middle
+      %h3= "Cartelera de #{@genre.name}"
+      %ul.cartelera
+        - Movie.on_theatres.from_named_genre(@genre.name).each do |movie|
+          %li
+            - link_to movie, :class => "movie", :title => movie.title do
+              = image_tag movie.banner.url(:scheduled)
+            .desc
+              = link_to movie.title, movie, :class => "title", :title => movie.title
+              %p.tags
+                - movie.genres.each do |genre|
+                  = link_to genre.name, genre, :title => genre.name, :class => "title"
+              = link_to "Opiniones (#{movie.posts.size})", movie_posts_path(movie)
+            %p.rating= render_score movie.final_score
+            .clear
+
+      %p.short
+        = link_to 'Listar géneros', genres_path
+
+            
+    .bottom
+.clear
+
+

@@ -1,0 +1,15 @@
+%h1 Los blogs
+%table.data
+  %tr
+    %th Blog
+    %th Categoría
+    %th Entradas
+    %th Visitas
+  - @blogs.each do |blog|
+    %tr
+      %td= h blog.name
+      %td= h blog.category_name
+      %td= h blog_posts_count blog
+      %td= h blog_visits_count blog
+      %td= link_to 'Ver', blog
+

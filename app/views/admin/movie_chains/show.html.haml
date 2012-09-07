@@ -1,0 +1,30 @@
+#content
+  #chain.widget
+    .top
+    .middle
+      %h3
+        = h @movie_chain.name
+      %p
+        = image_tag @movie_chain.logo.url(:medium)
+      %p
+        = link_to 'Editar', edit_admin_movie_chain_path(@movie_chain)
+      %p.short
+        %b Address:
+        = h @movie_chain.address
+      %p.short
+        %b Bio:
+        = h @movie_chain.bio
+      %h4 Cines
+      %p
+        %table.data
+          - @movie_chain.theatres.each do |theatre|
+            %tr{:class=>cycle("even","odd")}
+              %td= h link_to theatre.name, theatre
+              %td= h theatre.address
+              %td= link_to 'Editar', edit_admin_theatre_path(theatre), :class => "edit"
+              %td= link_to 'Eliminar', [:admin, theatre], :confirm => 'Estás seguro?', :method => :delete, :class => "delete"
+
+        %p.short
+          = link_to 'Agregar Cine', new_admin_theatre_path(:movie_chain_id => @movie_chain.id)
+    .bottom
+

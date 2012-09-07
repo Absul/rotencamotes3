@@ -1,0 +1,23 @@
+#content
+  #genres.widget
+    .top
+    .middle
+      %h3 Géneros
+      %table.data
+        - @genres.each do |genre|
+          %tr{:class=>cycle("even","odd")}
+            %td= h link_to genre.name, genre
+            %td= link_to 'Editar', edit_admin_genre_path(genre), :class => "edit"
+            %td= link_to 'Eliminar', [:admin, genre], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+        = will_paginate @genres
+    .bottom
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p.short
+        = link_to 'Nuevo género', new_admin_genre_path
+    .bottom
+  .clear
+

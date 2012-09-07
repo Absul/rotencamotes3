@@ -1,0 +1,21 @@
+#content
+  #blogs.widget
+    .top
+    .middle
+      %h3 Blog de opiniones
+      %table.data
+        %tr
+          %th Nombre
+          %th Categoría
+          %th Opiniones
+          %th Visitas
+        - @blogs.each do |blog|
+          %tr
+            %td= h blog.name
+            %td= h blog.category_name
+            %td= h blog_posts_count blog
+            %td= h blog_visits_count blog
+            %td= link_to 'Ver', blog
+    .bottom
+  .clear
+

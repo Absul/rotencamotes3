@@ -1,0 +1,17 @@
+#content
+	= f.error_messages
+	#tag.widget
+		.top
+		.middle
+			%h3 Tag
+			- f.inputs do
+				= f.input :name, :label => 'Nombre'
+				
+				= image_tag @tag.banner.url(:thumbnail) unless @tag.banner_file_name.nil?
+				= f.input :banner, :as => :file, :label => 'Banner'
+			- f.buttons do
+				= f.commit_button commit_label
+			%br
+			= link_to 'Regresar', admin_tags_path
+		.bottom
+	.clear

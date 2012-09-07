@@ -1,0 +1,20 @@
+#content
+  #studio.widget
+    .top
+    .middle
+      %h3 Estudio de Cine
+      %p
+        = link_to 'Editar', edit_admin_studio_path(@studio)
+      %p
+        = h image_tag @studio.logo.url(:thumb)
+      %p
+        = h @studio.name
+      %p
+        = h @studio.address
+      %p
+        = h @studio.bio
+      %p
+        = link_to 'Regresar', admin_studios_path
+    .bottom
+  .clear
+

@@ -1,0 +1,14 @@
+#content
+  - @movie_chains.each do |movie_chain|
+    #chain.widget
+      .top
+      .middle
+        %h3
+          = link_to movie_chain.name, movie_chain
+          = image_tag movie_chain.logo.url(:small)
+          - movie_chain.theatres.each do |theatre|
+            %h4= h link_to theatre.name, theatre
+            %p.short= h theatre.address
+      .bottom
+    .clear
+

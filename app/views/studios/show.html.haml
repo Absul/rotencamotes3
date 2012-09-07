@@ -1,0 +1,30 @@
+#content
+  #studio_movies.widget
+    .top
+    .middle
+      %h3
+        Películas de
+        = @studio.name
+      - @studio.movies.each do |movie|
+        %p.short
+          = link_to movie.name_with_year, movie
+      %p
+        = link_to 'Regresar', studios_path
+    .bottom
+  .clear
+#sidebar
+  #studio.widget
+    .top
+    .middle
+      %h3 Acerca de
+      %p.short
+        = image_tag @studio.logo.url(:medium)
+      %p.short
+        = h @studio.name
+      %p.short
+        = h @studio.address
+      %p.short
+        = h @studio.bio
+    .bottom
+  .clear
+

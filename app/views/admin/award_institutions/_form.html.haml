@@ -1,0 +1,26 @@
+#content
+  = f.error_messages
+  #award_institution.widget
+    .top
+    .middle
+      %h3 Institución
+      - f.inputs do
+        = f.input :name, :label => 'Nombre'
+        = f.input :description, :label => 'Descripción'
+        = f.input :bio,   :as => :text
+        = f.input :url
+      - f.buttons do
+        = f.commit_button commit_label
+      %p= link_to 'Regresar', admin_award_institutions_path
+    .bottom
+#sidebar
+  #image.widget
+    .top
+    .middle
+      %h3 Logo
+      = image_tag @award_institution.logo.url(:thumbnail)
+      - f.inputs do
+        = f.input :logo,  :as => :file, :label => 'Modificar'
+    .bottom
+  .clear
+

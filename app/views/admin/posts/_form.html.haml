@@ -1,0 +1,40 @@
+#content
+	= f.error_messages
+	#post.widget
+		.top
+		.middle
+			%h3 Opinión
+			- f.inputs do
+				= f.input :title, :label => 'Título'
+				= f.input :blog
+				= f.input :user, :label => 'Autor'
+				- if @post.movie
+					%p.short
+						%strong 
+							= "Película: "
+						= @post.movie.name_with_year
+				= f.input :content, :as => :text, :label => 'Contenido', :input_html => {:class => "tinymce"}
+				= f.input :drafted_at, :as => :date, :label => 'Fecha Borrador'
+				= f.input :published_at, :as => :date, :label => 'Fecha Publicado'
+				= f.input :reviewed_at, :as => :date, :label => 'Fecha Revisado'
+				= f.input :cached_tag_list, :label => "Etiquetas"
+				= f.input :rating, :as => :numeric, :label => 'Calificación'
+				%br
+				= f.input :status, :as => :select, :collection => Post::STATUSES.values, :label => 'Estado'
+				= f.input :permalink, :hint => "En caso no utilizar ninguno, se generará automáticamente según el nombre"
+			%br
+			%h4 Categorías
+			- f.inputs do
+				= f.input :categories, :as => :check_boxes, :label => ''
+			%br
+			%h4 Etiquetas
+			- f.inputs do
+				= f.input :cached_tag_list, :label => 'Etiquetas'
+			%br
+			- f.buttons do
+				= f.commit_button commit_label
+			%br
+			= link_to 'Regresar', admin_posts_path
+		.bottom
+	.clear
+

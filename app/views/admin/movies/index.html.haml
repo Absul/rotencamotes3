@@ -1,0 +1,53 @@
+#content
+  #movies.widget
+    .top
+    .middle
+      %h3 Películas
+      %table.data
+        %tr
+          %th Título
+          %th Banner
+          %th Reparto/Colab.
+          %th Referencia
+          %th Descripción
+        - @movies.each do |movie|
+          %tr
+            %td= h link_to movie.title, movie
+            %td= h movie.banner?        ? " " : "Incompleta"
+            %td= h movie.cast_and_crew? ? " " : "Incompleta"
+            %td= h movie.reference?     ? " " : "Incompleta"
+            %td= h movie.description?   ? " " : "Incompleta"
+            %td= link_to 'Editar', edit_admin_movie_path(movie), :class => "edit"
+            %td= link_to 'Eliminar', [:admin, movie], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+      .paginate= will_paginate @movies
+    .bottom
+  .clear
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p= link_to 'Nueva película', new_admin_movie_path
+    .bottom
+  - if false
+    #inconsistences.widget
+      .top
+      .middle
+        %h3 Similitudes
+        %table.data
+          %tr{:class => cycle("even", "odd")}
+            %th Título
+            %th Estreno
+            %th Dup
+          - Movie.all.each do |movie|
+            - if movie.similars.count > 0
+              %tr{:class => cycle("even", "odd")}
+                %td= h link_to movie.title, movie
+                %td= h movie.try(:released_at).try(:strftime,"%d-%b-%Y")
+                %td= h movie.similars.count
+                %td= link_to 'Editar', edit_admin_movie_path(movie), :class => "edit"
+                %td= link_to 'Eliminar', [:admin, movie], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+    .bottom
+
+  .clear
+

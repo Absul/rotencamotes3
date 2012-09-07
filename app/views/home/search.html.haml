@@ -1,0 +1,15 @@
+#content
+  #posts.widget
+    .top
+    .middle
+      %h3 Resultados de búsqueda
+      - @results.each do |result|
+        - if result.is_a? Post
+          = render :partial => "post", :collection => [result]
+        - elsif result.is_a? Movie
+          = render :partial => "scheduled_movie", :collection => [result], :locals => { :last => 1}
+        - elsif result.is_a? Person
+          = render :partial => "person", :collection => [result]
+      .clear
+    .bottom
+

@@ -1,0 +1,24 @@
+%p
+  %b Nombre:
+  = h @blog.name
+%p
+  %b Permalink:
+  = h @blog.permalink
+%p
+  = image_tag @blog.banner.url(:large)
+%p
+  %b Categoría:
+  = h @blog.category_name
+%p
+  %b Activo:
+  = h @blog.active
+%p
+  %b Número de opiniones:
+  = h blog_posts_count(@blog)
+%p
+  %b Número de visitas:
+  = h blog_visits_count(@blog)
+= link_to 'Editar', edit_admin_blog_path(@blog)
+|
+\#{link_to 'Regresar', admin_blogs_path}
+

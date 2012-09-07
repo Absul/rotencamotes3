@@ -1,0 +1,68 @@
+#content
+  #posts.widget
+    .top
+    .middle
+      %h3 Mis opiniones
+      %p.short
+        = link_to 'Nueva opinión', new_member_blog_post_path (current_user.blog)
+      %table.data
+        - current_user.posts.active.each do |post|
+          %tr{:class=>cycle("even","odd")}
+            %td
+              %p.short
+                = h link_to post.title, post
+                en
+                = h link_to post.blog.name, post.blog
+            %td= link_to 'Editar', edit_member_post_path(post), :class => "edit"
+      %p.short
+        = link_to 'Nueva opinión', new_member_blog_post_path (current_user.blog)
+
+    .bottom
+#sidebar
+  #most_visited.widget
+    .top
+    .middle
+      %h3 Más visitadas
+      %table.data
+        - current_user.posts.most_visited.each do |post|
+          %tr
+            %td
+              %p.short
+                = h link_to post.title, post
+                en
+                = h link_to post.blog.name, post.blog
+                = "(#{post_visits_count(post)})"
+            %td= link_to 'Editar', edit_member_post_path(post), :class => "edit"
+    .bottom
+  #most_commented.widget
+    .top
+    .middle
+      %h3 Más comentadas
+      %table.data
+        - current_user.posts.most_visited.each do |post|
+          %tr
+            %td
+              %p.short
+                = h link_to post.title, post
+                en
+                = h link_to post.blog.name, post.blog
+            %td= link_to 'Editar', edit_member_post_path(post), :class => "edit"
+    .bottom
+  #last_comments.widget
+    .top
+    .middle
+      %h3 Últimos comentarios
+      %table.data
+        - Comment.on_posts_from_user(current_user.id).last_published.each do |comment|
+          %tr
+            %td
+              %p.short
+                = link_to summary_of(comment.content), post_path (comment.post, :anchor => "comment_#{comment.id}")
+                el
+                = h comment.created_at.strftime('%d-%b-%Y')
+                en
+                = h link_to comment.post.title, comment.post
+    .bottom
+
+  .clear
+

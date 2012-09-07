@@ -1,0 +1,204 @@
+- content_for :fb_tags do
+  %meta{:property=>"og:title", :content=>"VotenCamotes.com :: #{@post.title} - Crítica #{ "sobre #{@post.movie.name_with_year}" if @post.movie }"}
+  %meta{:property=>"og:site_name", :content=>"VotenCamotes"}
+
+#content.blog_post
+  / #blog.widget
+  /   .top
+  /   .middle
+  /     %p
+  /       = image_tag @post.blog.banner.url(:medium)
+  /   .bottom
+  - if @post.cached_tag_list
+    - if @post.cached_tag_list.include? "oscars"
+      - @tag = Tag.find_by_name("oscars")
+      #banner.widget
+        .top
+        .middle
+          - link_to "/oscars2011" do
+            = image_tag @tag.banner.url(:large), :style =>"margin-left:3px;margin-top:1px;"
+        .bottom
+
+  #post.widget
+    .top
+    .middle
+      %h3= h @post.title
+      - if allowed_to_act_on @post
+        = link_to "Editar",edit_member_post_path(@post)
+
+      .post
+
+        %h4.date= @post.published_at.strftime('%d-%b-%Y') if @post.published_at
+        %p.headlines= @post.headlines
+        .content
+          = @post.content
+        - if @post.movie
+          .movie= render :partial => "movie_widget", :locals => {:movie => @post.movie}
+
+        - if @post.rating
+          .rating= render_score @post.rating
+
+        %p{:style => "margin-top:10px;margin-left:10px;display:block;"}
+          %a{:href=>"http://twitter.com/share", :class=>"twitter-share-button", "data-count"=>"horizontal", "data-via"=>"votencamotes", "data-lang"=>"es"}
+            Tweet
+            %script{:type=>"text/javascript", :src=>"http://platform.twitter.com/widgets.js"}
+
+
+      .clear
+    .bottom
+  - if @post.comments.count > 0
+    #comments.widget.talking
+      .top
+      .middle
+        %h3
+          = post_comments_count @post
+        %ul
+          - @post.comments.each do |comment|
+            - if comment.content
+              %li{:id => "comment_#{comment.id}", :class => score_icon(comment.score)}
+                .avatar
+                  - if comment.user
+                    - link_to comment.user, :class => "tipsy", :title => comment.user.full_name do
+                      - unless comment.user.avatar_file_name.blank?
+                        = image_tag comment.user.avatar.url(:avatar), :class => "avatar", :title => comment.user.full_name, :size => "64x64"
+                      - else
+                        = image_tag "unknown.png", :class => "avatar", :title => "test", :size => "64x64"
+                      = comment.user.full_name
+                  - else
+                    = image_tag "unknown.png", :class => "avatar", :title => comment.name, :size => "64x64"
+                    = comment.name
+                .talk
+                  %p= simple_format comment.content
+                  - if current_user && current_user.admin?
+                    = link_to "Editar", edit_admin_comment_path(comment), :class => "edit"
+                %p.posted
+                  %span.share.comment_data
+                    %iframe{:allowtransparency => "true", :frameborder => "0", :scrolling => "no", :src => "http://www.facebook.com/plugins/like.php?href=#{CGI::escape(post_url(@post)) + "_comment_#{comment.id}"}&amp;layout=button_count&amp;show_faces=false&amp;width=80&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=40", :style => "border:none; overflow:hidden; width:80px; height:20px;margin-top:0px;"}
+
+                  %span.comment_data.about
+                    - if comment.post
+                      Comentado en
+                      = link_to truncate(comment.post.title, 40), post_path(comment.post, :anchor => "comment_#{comment.id}")
+                    - else
+                      Sobre esta película
+                    hace
+                    = distance_of_time_in_words_to_now comment.created_at
+                  .clear
+                .clear
+
+        .clear
+      .bottom
+  #reply.widget
+    .top
+    .middle
+      %h3 Deja tu comentario y valoración
+      - if @post.movie
+        %h4= @post.movie.title
+      - semantic_form_for @comment do |f|
+        = f.error_messages
+        - f.inputs do
+          - if current_user && @post.movie
+            %li.rating
+              %p Valoración
+              %label.camote{:for=>"camote", :title => "Me gustó"}
+                %span
+              %input.hide{:id=>"camote", :name=>"score_value", :type=>"radio", :value=>"5"}
+              %label.rotten{:for=>"rotten", :title => "No me gustó"}
+                %span
+              %input.hide{:id=>"rotten", :name=>"score_value", :type=>"radio", :value=>"1"}
+            %li
+              %label{:for=>"theatre_id"} La vi en
+              = select_tag 'theatre_id', grouped_options_for_select(places_to_watch, nil, "Selecciona..."), {:id => "cine", :include_blank => true}
+          - else
+            - unless current_user
+              %li.invitation
+                Valoración: Los usuarios registrados pueden dejar su valoración para las películas.
+                = link_to 'Regístrate', new_user_registration_path(:back_to => request.request_uri)
+                o
+                = link_to 'inicia sesión', new_user_session_path(:back_to => request.request_uri)
+                o 
+                = link_to_oauth2("user","entra vía facebook")
+                para dejar tu valoración.
+
+          %p{:style => "width: 1px; height: 1px; overflow: hidden;"}
+            Por favor, ignore el siguiente campo:
+            = f.input :comment
+            
+          = f.input :content, :as => :text, :label => "Comentario", :wrapper_html => {:class=> "comment"}
+          - unless current_user
+            = f.input :name, :label => "Nombre"
+            = f.input :email
+          - else
+            = f.input :name, :as => :hidden, :value => current_user.full_name
+            = f.input :email, :as => :hidden, :value => current_user.email
+            = f.input :user_id, :as => :hidden, :value => current_user.id
+
+          = f.input :post_id, :as => :hidden, :value => @post.id
+        - f.buttons do
+          = f.commit_button "Comentar"
+    .bottom
+  .clear
+
+#sidebar
+  #movie.widget.blogger
+    .top
+    .middle
+      .movie
+        = avatar_tag(@post.user)
+        .clear
+      .detail
+        .spec
+          %p.short
+            %h4.author
+              = link_to h(@post.blog.name), @post.blog
+          %p.short
+            %h4.author
+              = 'Por '
+              = link_to h(@post.user.full_name), @post.user
+          %p.short
+            .author_bio
+              = summary_of h @post.blog.description
+      .clear
+    .bottom
+  #share.widget
+    .top
+    .middle
+      %h3 Compartir esta opinión
+      .links
+        %a.facebook{:href=>"http://www.facebook.com/sharer.php?u=#{post_url(@post)}&t=#{URI.encode("VotenCamotes.com :: #{@post.title} - Camoteada")}"}
+        /%a.email{:href=>"#"}
+
+      %iframe{:allowtransparency => "true", :frameborder => "0", :scrolling => "no", :src => "http://www.facebook.com/plugins/like.php?href=#{CGI::escape(post_url(@post))}&amp;layout=standard&amp;show_faces=true&amp;width=320&amp;action=recommend&amp;font=arial&amp;colorscheme=light&amp;height=80", :style => "border:none; overflow:hidden; width:320px; height:80px;margin-top:0px;"}
+    .bottom
+
+
+
+    / #share
+    /   - widget_tag "Comparte esta película" do
+    /     .links
+    /       %a.facebook{:href=>"http://www.facebook.com/sharer.php?u=#{movie_url(@movie)}&t=#{URI.encode("VotenCamotes.com :: #{@movie.name_with_year} - Ficha de Película")}"}
+    /       %a.twitter{:href=>share_twitter_link}
+    /       /%a.email{:href=>"#"}
+    /     .share
+    /       %iframe{:allowtransparency => "true", :frameborder => "0", :scrolling => "no", :src => "http://www.facebook.com/plugins/like.php?href=#{CGI::escape(movie_url(@movie))}&amp;layout=standard&amp;show_faces=true&amp;width=320&amp;action=recommend&amp;font=arial&amp;colorscheme=light&amp;height=80", :style => "border:none; overflow:hidden; width:320px; height:80px;margin-top:0px;"}
+
+
+
+
+  #reference.widget
+    .top
+    .middle
+      %h3 Referencia
+      %h4 Etiquetas
+      %p
+        - @post.tag_list.each do |tag|
+          = link_to tag, tag_show_path(CGI.escape(tag))
+      %h4 Categorías
+      - @post.post_categories.each do |post_category|
+        %p
+          = link_to post_category.category.name, post_category.category
+
+    .bottom
+  .clear
+.clear
+

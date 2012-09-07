@@ -1,0 +1,250 @@
+- content_for :fb_tags do
+  %meta{:property=>"og:title", :content=>"VotenCamotes.com :: #{@movie.name_with_year} - Ficha de Película"}
+  %meta{:property=>"og:site_name", :content=>"VotenCamotes"}
+  %meta{:property=>"og:image", :content=>@movie.banner.url(:banner)}
+
+
+#content
+
+  - if @movie.cached_tag_list
+    - if @movie.cached_tag_list.include? "oscars"
+      - @tag = Tag.find_by_name("oscars")
+      #banner.widget
+        .top
+        .middle
+          - link_to "/oscars2011" do
+            = image_tag @tag.banner.url(:large), :style =>"margin-left:3px;margin-top:1px;"
+        .bottom
+
+  #movie.widget
+    .top
+    .middle
+      .movie
+        .poster
+          =image_tag @movie.banner.url(:banner), :size => "150x222", :title => @movie.title, :alt => @movie.title, :class => "poster"
+        - if current_user && current_user.not_rated?(@movie) 
+          = facebox_link_to "la he visto", {:method => :get, :url => comment_movie_path(@movie)}, {:href => comment_movie_path(@movie), :class => "saw tipsy", :title => "Cuéntamos qué te pareció, dónde la viste y deja tu opinión"}
+        - elsif not current_user
+          = link_to "la he visto", {:method => :get, :url => comment_movie_path(@movie)}, {:href => comment_movie_path(@movie), :class => "saw tipsy", :title => "Deja una opinión registrándote o iniciando sesión primero"}
+        %a.comment.tipsy{:href => recomend_movie_path(@movie), :title => "Envíala a tus amigos"}recomiendala
+      .detail
+        %h3= @movie.name_with_year
+        - if current_user && current_user.admin?
+          = link_to "Editar", edit_admin_movie_path(@movie), :class => "edit"
+        #tags= render_genres_links
+        .spec
+          - if @movie.studio
+            %p.short
+              %strong Estudio:
+              %span= link_to @movie.studio.name, @movie.studio
+          - if @movie.original_title
+            %p.short
+              %strong Título original:
+              %span= @movie.original_title
+          - if @movie.summary
+            %p.short
+              %strong Acerca de:
+              %span.movie_summary= strip_tags @movie.summary
+          %p.short
+            %strong Reparto:
+            %span#cast= render_cast_links
+          %p.short
+            %strong Dirección:
+            %span#directors= render_directors_links
+          %p.short
+            %strong Guión:
+            %span#writers= render_writers_links          
+        #rating
+          .rotten{:class => "tipsy", :title => "No les ha gustado"}
+            .points= @movie.bad_scores
+          .content
+            .porcentaje= render_score @movie.final_score
+            .opiniones
+              Críticas:
+              = @movie.posts.size
+            / .stars
+            /   .fill{:style=>"width:#{number_to_percentage(@movie.final_score, :precision => 0)}"}
+            .coments
+              Comentarios:
+              = @movie.comments.size
+          .bar
+            .fill{:style=>"width:#{number_to_percentage(@movie.final_score, :precision => 0)}"}
+          .camote{:class => "tipsy", :title => "Les ha gustado"}
+            .points= @movie.good_scores
+
+
+      .clear
+    .bottom
+
+  - if @movie.synopsis.present?
+    #synopsis
+      - widget_tag do
+        .detail
+          %h3 Sinopsis
+        .spec
+          %p
+            .movie_synopsis
+              - if @movie.synopsis.present?
+                = strip_tags @movie.synopsis
+        .clear
+        
+  -if @movie.trailers.present?
+    #trailers.widget
+      .top
+      .middle
+        %h3 Trailers
+        %ul
+          - @movie.movie_trailers.each do |trailer|
+            %li 
+              = trailer
+      .bottom
+
+  - if not @movie.awards.empty?
+    #awards.widget
+      .top
+      .middle
+        %h3 Premios
+        %table.data
+          %tr
+            %th Institución
+            %th Persona
+            %th Año
+            %th Categoría
+            %th Estado
+          - @movie.awards.find(:all, :include => [:category, :institution, :person]).each do |award|
+            %tr{:class => cycle("odd", "even")}
+              %td= award.institution.name
+              %td= award.try(:person).try(:short_name)
+              %td= award.year_received
+              %td= award.category.name
+              %td= award.status
+        %p.short
+          = h link_to 'Lista de premios', awards_path
+      .bottom
+
+
+  #related.widget
+    .top
+    .middle
+      %h3 Camoteadas Relacionadas
+      %ul
+        - if @movie.posts.empty?
+          %li Todavía ningún experto ha opinado sobre ésta película
+        - else
+          = render :partial => "post", :collection => @movie.posts
+    .bottom
+
+  - unless @movie.post_images.empty?
+    #images.widget
+      .top
+      .middle
+        %h3 Imágenes relacionadas a la película
+        %ul#movie_images_list
+          - @movie.post_images.each do |image|
+            %li
+              - link_to image, :rel => "facebox" do
+                = image_tag image, :width => "100"
+      .bottom
+
+  - unless @movie.post_embeds.empty?
+    #videos.widget
+      .top
+      .middle
+        %h3 Videos relacionados a la película
+        %ul
+          - @movie.post_embeds.each do |embed|
+            %li 
+              = embed
+      .bottom
+
+
+    
+  #reviews.widget.talking
+    .top
+    .middle
+      %h3 comentarios y valoraciones
+      %ul
+        - if @movie.comments.empty?
+          %li
+            Todavía no tenemos comentarios para ésta película :(.
+            = link_to "¿Te animas a ser el primero?", :anchor => "reply"
+        - else
+          = render :partial => "comment", :collection => @movie.comments.paginate(:page => params[:page])
+
+    .bottom
+    .pager
+      = will_paginate @movie.comments.paginate(:page => params[:page])
+      .clear
+
+  = render :partial => "comment_form_container"
+
+#sidebar
+
+  #watch.widget
+    .top
+    .middle
+      %h3 ¿Cuándo verla?
+      %ul
+        - @scheduled_theatres_for_movie.each do |theatre|
+          %li
+            .logo-cine
+              - link_to theatre do
+                = image_tag(theatre.movie_chain.logo.url(:small))
+            .content
+              %h4
+                = link_to theatre.name, theatre
+                %span.porcentaje= render_score (Score.calculated_for_theatre(theatre, @movie.id))
+              .time
+                - Schedule.active.from_theatre(theatre.id).from_movie(@movie.id).each do |schedule|
+                  = schedule.description
+                  = schedule.current_showtimes
+            .clear
+    .bottom
+
+  #maps.widget
+    .top
+    .middle
+      %h3 ¿Dónde verla?
+      - content_for :extra_javascripts do
+        %script{:type=>"text/javascript", :src=>"http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAXMgBsic0JFR5LXYOW2dCVxQ8xGgx7x61ij-dWTE0sD3RQrlR5hTgkqg4X2_j1mZgFgv01mJkRbFaJA"}
+      %p Trataremos de identificar según su posición qué cines tienen esta película
+      %p
+        %span#status
+      #gmap
+      - content_for :extra_javascripts do
+        :javascript
+          $(document).ready(function(){
+              get_location();
+            });
+
+      .clear
+    .bottom
+    
+  #reference.widget
+    .top
+    .middle
+      %h3 Listada en
+      %p
+        - if @list_items.empty?
+          = 'Todavía nadie ha agregado esta película a una lista!'
+          = 'Se el primero en '
+          = link_to("agregarla a una!", user_path(current_user, :anchor => "lists"))
+        - else 
+          - @list_items.each do |list_item|
+            = link_to list_item.list.title, list_path(list_item.list)            
+    .bottom
+
+  #reference.widget
+    .top
+    .middle
+      %h3 Etiquetas
+      %p
+        - if @movie.tag_list.empty?
+          = 'Sin etiquetas'
+        - else 
+          - @movie.tag_list.each do |tag|
+            = link_to tag, tag_show_path(CGI.escape(tag))
+            
+    .bottom
+.clear
+

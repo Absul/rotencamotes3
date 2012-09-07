@@ -1,0 +1,15 @@
+%ul.cartelera
+  %li{:class => (scheduled_movie_counter == last ? "last" : "")}
+    - link_to scheduled_movie, :class => "movie", :title => scheduled_movie.title do
+      = image_tag scheduled_movie.banner.url(:scheduled), :size => "65x97"
+    .desc
+      = link_to scheduled_movie.name_with_year, scheduled_movie, :class => "title", :title => scheduled_movie.title
+      - if current_user && current_user.admin?
+        = link_to "Editar", edit_admin_movie_path(scheduled_movie), :class => "edit"
+      %p.tags
+        - scheduled_movie.genres.each do |genre|
+          = link_to genre.name, genre, :title => genre.name, :class => "title"
+      = link_to "Comentarios (#{scheduled_movie.related_comments})", movie_path(scheduled_movie, :anchor => "review")
+    %p{:class =>["rating",(scheduled_movie_counter == 0 ? "tour_6" : "" )]}= render_score(scheduled_movie.final_score)
+    .clear
+

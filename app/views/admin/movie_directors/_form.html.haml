@@ -1,0 +1,16 @@
+#content
+  = f.error_messages
+  #director.widget
+    .top
+    .middle
+      %h3 Director de Película
+      - f.inputs do
+        = #f.input :movie, :label => 'Película', :collection => Movie.all(:order => :title)
+        = f.input :director, :label => 'Director', :collection => Person.all(:order => "first_name, last_name")
+      - f.buttons do
+        = f.commit_button commit_label
+      %br
+        = link_to 'Regresar', admin_movie_directors_path
+    .bottom
+  .clear
+

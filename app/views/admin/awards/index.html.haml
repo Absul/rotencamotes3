@@ -1,0 +1,40 @@
+#content
+  #awards.widget
+    .top
+    .middle
+      %h3 Premios
+      %table.data
+        %tr
+          %th
+            %b Institución
+          %th
+            %b Categoría
+          %th
+            %b Año
+          %th
+            %b Estado
+          %th
+            %b Persona
+          %th
+            %b Película
+        - @awards.each do |award|
+          %tr
+            %td= h award.institution.name
+            %td= h award.category.name
+            %td= h award.year_received
+            %td= h award.status
+            %td= h award.try(:person).try(:short_name)
+            %td= h award.try(:movie).try(:title)
+            %td= link_to 'Editar', edit_admin_award_path(award), :class => "edit"
+            %td= link_to 'Eliminar', [:admin, award], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+    .bottom
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p
+        = link_to 'Nuevo premio', new_admin_award_path
+    .bottom
+  .clear
+

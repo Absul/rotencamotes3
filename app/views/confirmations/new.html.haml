@@ -1,0 +1,11 @@
+#content
+  #opiniones
+  
+  - widget_tag do
+    %h2 Reenviar instrucciones de confirmación
+    - form_for resource_name, resource, :url => confirmation_path(resource_name) do |f|
+      = f.error_messages
+      %p= f.label :email
+      %p= f.text_field :email
+      %p= f.submit "Reenviar", :class => "create"
+    = render :partial => "shared/devise_links"

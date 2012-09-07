@@ -1,0 +1,14 @@
+- require 'uri'
+#content
+	#tags.widget
+		.top
+		.middle
+			%h3 Etiquetas
+			%table.data
+				%tr
+					%th Nombre
+				- @tags.each do |tag|
+					%tr
+						%td= link_to tag.name, URI.escape(tag_path(tag.name))
+		.bottom
+	.clear

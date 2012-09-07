@@ -1,0 +1,18 @@
+#content
+  - @studios.each do |studio|
+    #studios.widget
+      .top
+      .middle
+        %h3
+          = studio.name
+        %p
+          = link_to 'Ver', studio
+        %p.short
+          = image_tag studio.logo.url(:thumb)
+        %p.short
+          = h studio.address
+        %p.short
+          = h studio.bio
+      .bottom
+  .clear
+

@@ -1,0 +1,26 @@
+#content
+  #schedule.widget
+    .top
+    .middle
+      %h3= "Cartelera de #{@movie_chain.name}"
+      - @movie_chain.theatres.each do |theatre|
+        %p.short
+          = link_to theatre.name, theatre
+        %table.data
+          - theatre.schedules.active.each do |schedule|
+            %tr{:class=>cycle("even","odd")}
+              %td= link_to schedule.movie.title, schedule.movie
+              %td= schedule.current_showtimes
+    .bottom
+#sidebar
+  #chain.widget
+    .top
+    .middle
+      %h3 Acerca de
+      %p
+        =image_tag @movie_chain.logo.url(:medium)
+      %p.short
+        = h @movie_chain.address
+      %p.short= h @movie_chain.bio
+    .bottom
+

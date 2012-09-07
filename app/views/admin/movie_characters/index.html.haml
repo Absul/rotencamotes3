@@ -1,0 +1,30 @@
+#content
+  - @movies.each do |movie|
+    #characters.widget
+      .top
+      .middle
+        %h3
+          Personajes de
+          = movie.title
+        %table.data
+          %tr
+            %th Actor/Actriz
+            %th Personaje
+          - movie.movie_characters.each do |movie_character|
+            %tr
+              %td= h movie_character.try(:person).try(:short_name)
+              %td= h movie_character.try(:character_name)
+              %td= link_to 'Editar', edit_admin_movie_character_path(movie_character), :class => "edit"
+              %td= link_to 'Eliminar', [:admin, movie_character], :confirm => '¿Estás seguro?', :method => :delete, :class => "delete"
+      .bottom
+    .clear
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p
+        = link_to 'Nuevo Personaje de Película', new_admin_movie_character_path
+    .bottom
+  .clear
+

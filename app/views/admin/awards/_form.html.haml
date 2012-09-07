@@ -1,0 +1,20 @@
+#content
+  = f.error_messages
+  #award.widget
+    .top
+    .middle
+      %h3 Premio
+      - f.inputs do
+        = f.input :institution, :label => 'Institución'
+        = f.input :year_received, :label => 'Año recibido'
+        = f.input :category, :label => 'Categoría'
+        = f.input :status,  :as => :select, :collection => Award::STATUSES.values, :label => 'Estado'
+        %br
+        = f.input :person, :label => 'Persona'
+        = #f.input :movie, :label => 'Película'
+      - f.buttons do
+        = f.commit_button commit_label
+      %p= link_to 'Regresar', admin_awards_path
+    .bottom
+  .clear
+

@@ -1,0 +1,28 @@
+#content
+  - @studios.each do |studio|
+    #studios.widget
+      .top
+      .middle
+        %h3
+          = studio.name
+        %p.short
+          = link_to 'Editar', edit_admin_studio_path(studio)
+          = link_to 'Eliminar', [:admin, studio], :confirm => '¿Estás seguro?', :method => :delete
+        %p.short
+          = image_tag studio.logo.url(:thumb)
+        %p.short
+          = h studio.address
+        %p.short
+          = h studio.bio
+      .bottom
+  .clear
+#sidebar
+  #actions.widget
+    .top
+    .middle
+      %h3 Acciones
+      %p
+        = link_to 'Nuevo estudio', new_admin_studio_path
+    .bottom
+  .clear
+

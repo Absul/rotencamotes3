@@ -1,0 +1,22 @@
+#content
+  = f.error_messages
+  #movie_admin.widget
+    .top
+    .middle
+      %h3 Cartelera
+      - f.inputs do
+        = f.input :theatre, :label => 'Cine', :collection => Theatre.all(:order => :name)
+        = #f.input :movie, :label => 'Película', :collection => Movie.all(:order => :title)
+        = f.input :description, :label => 'Descripción'
+        = f.input :in_theatre_from, :as => :date, :label => 'Desde'
+        = f.input :in_theatre_to,   :as => :date, :label => 'Hasta'
+        = f.input :showtimes, :label => 'Horarios'
+        %br
+        = f.input :status,          :as => :select, :collection => Schedule::STATUSES
+      - f.buttons do
+        = f.commit_button commit_label
+      %br
+      = link_to 'Regresar', admin_schedules_path
+    .bottom
+  .clear
+

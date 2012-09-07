@@ -1,0 +1,35 @@
+%p
+  = image_tag @movie.banner.url(:medium)
+%p
+  %b Título:
+  = h @movie.title
+%p
+  %b Fecha de estreno:
+  = h @movie.released_at.strftime("%d-%b-%Y")
+%p
+  %b Duración:
+  = h "#{@movie.lenght} minutos"
+%p
+  %b Website:
+  = h @movie.website
+%p
+  %b País:
+  = h @movie.country
+%p
+  %b Idioma:
+  = h @movie.language
+%p
+  %b Calificación MPAA:
+  = h @movie.mpaa_rate
+%p
+  %b Acerca de:
+  = h simple_format @movie.summary
+
+%p
+  %b Sinopsis:
+  = h simple_format @movie.synopsis
+
+= link_to 'Editar', edit_admin_movie_path(@movie)
+|
+\#{link_to 'Regresar', admin_movies_path}
+

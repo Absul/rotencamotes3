@@ -1,0 +1,22 @@
+%p
+  %b Name:
+  = h @blog.name
+%p
+  %b Permalink:
+  = h @blog.permalink
+  = image_tag @blog.banner.url(:thumbnail)
+%p
+  %b Category:
+  = h @blog.category_id
+%p
+  %b Active:
+  = h @blog.active
+%p
+  %b Posts counts:
+  = h @blog.posts_count
+%p
+  %b Visits count:
+  = h @blog.visits_count
+|
+\#{link_to 'Back', member_blogs_path}
+

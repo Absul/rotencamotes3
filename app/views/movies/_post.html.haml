@@ -1,0 +1,12 @@
+.comment{:class => (post_counter == 4 ? "last" : "")}
+  %p
+    - movie_title = "<span class='movie'>#{post.movie.title}</span>: " if post.movie
+    = link_to "#{movie_title} #{truncate(post.title,30)}", post, :class => "post_title"
+    = summary_of(post.content,250)
+    = link_to('Leer Más', post)
+  .rating
+    = render_score post.rating
+  .avatar
+    - link_to post.user, :class => "tipsy", :title => post.user.full_name do
+      = image_tag post.user.avatar.url(:avatar), :title => post.user.full_name, :size => "64x64", :class => "avatar"
+  .clear

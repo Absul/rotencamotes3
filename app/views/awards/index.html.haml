@@ -1,0 +1,24 @@
+#content
+  #awards.widget
+    .top
+    .middle
+      %h3 Premios
+      %table.data
+        %tr{:class => cycle("even", "odd")}
+          %th Institución
+          %th Año
+          %th Persona
+          %th Película
+          %th Categoría
+          %th Estado
+        - @awards.each do |award|
+          %tr{:class => cycle("even", "odd")}
+            %td= h award.institution.name
+            %td= h award.year_received
+            %td= h link_to award.try(:person).try(:short_name), award.try(:person) unless award.person.nil?
+            %td= h link_to award.try(:movie).try(:title), award.try(:movie)
+            %td= h award.category.name
+            %td= h award.status
+    .bottom
+  .clear
+
