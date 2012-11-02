@@ -67,8 +67,8 @@ module ApplicationHelper
     link_to_function(name, h("add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")"))
   end
 
-  def summary_of(text, lenght = 400)
-    raw truncate(strip_tags(text), :lenght => lenght)
+  def summary_of(text, length = 400)
+    raw truncate(strip_tags(text), :length => length)
   end
 
   def friendly_pluralize(number, singular, plural = nil)

@@ -21,12 +21,12 @@
   %p.posted
     - if comment.post
       Respuesta a
-      = link_to truncate(comment.post.title, :lenght => 40), post_path(comment.post)
+      = link_to truncate(comment.post.title, :length => 40), post_path(comment.post)
       ,
       = link_to "hace #{distance_of_time_in_words_to_now(comment.created_at)}", post_path(comment.post, :anchor => "comment_#{comment.id}")
     - elsif comment.movie
       Sobre
-      = link_to truncate(comment.movie.title, :lenght => 40), movie_path(comment.movie)
+      = link_to truncate(comment.movie.title, :length => 40), movie_path(comment.movie)
       ,
       = link_to "hace #{distance_of_time_in_words_to_now(comment.created_at)}" , movie_path(comment.movie, :anchor => "comment_#{comment.id}")
       
