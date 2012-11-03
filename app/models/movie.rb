@@ -51,7 +51,6 @@ class Movie < ActiveRecord::Base
     :pr =>  'Portugués'
   }
   
-  
   record_activity_of :user, :actions => [:create, :update], :if => Proc.new {|movie| movie.new_record? || %w(title summary synopsis banner_file_name plain_cast plain_directors plain_writers trailers).any? {|w| movie.changed.include?(w)}}
   
   # validations

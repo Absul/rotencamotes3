@@ -42,7 +42,7 @@ end
 #   resources :external_links
 #   resources :pathsets
 #   resources :studios, :path => "estudios"
-#   resources :movie_chains, :path => "cadenas"
+resources :movie_chains, :path => "cadenas"
 #   resources :theatres, :path => "cines"
 #   resources :profiles, :path => "perfiles"
 resources :users, :path => "usuarios"
@@ -188,7 +188,7 @@ resources :lists
 #   # map routes
   
 #   match "/sitemap.xml" => "sitemap"
-#   match "/search" => "home#search"
+  match "/search" => "home#search"
 #   match ':controller/:action/:id'
 #   match ':controller/:action/:id.:format'
 #   match "/feed" => "home#index", :format => "atom"

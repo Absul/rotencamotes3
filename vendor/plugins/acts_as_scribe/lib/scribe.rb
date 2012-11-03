@@ -32,7 +32,7 @@ module LinkingPaths
         def include_scribe_instance_methods(&block)
           unless included_modules.include? InstanceMethods
             yield if block_given?
-            class_inheritable_accessor :activity_options
+            class_attribute :activity_options
             self.activity_options ||= {}
             include InstanceMethods
           end
