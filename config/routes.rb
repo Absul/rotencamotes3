@@ -1,5 +1,5 @@
 Rotencamotes3::Application.routes.draw do
-root :to => "home#index"
+  root :to => "home#index"
 
 #   match "/indexDaso" => "indexDaso"
 #   match "/home_b" => "index_b"  
@@ -8,18 +8,18 @@ root :to => "home#index"
 
 
 #   match "/oscars2011" => "oscars" 
-match "/camoteadas/filter/:filter" => "index#filter_posts"
+  match "/camoteadas/filter/:filter" => "index#filter_posts"
 
 #   resources :lists
 
 #   resources :widgets
-resources :user_movies
-devise_for :users
-#   devise_for :admins
+  resources :user_movies
+  devise_for :users
+  devise_for :admins
 #   match "/about" => "about#index", :path => "acerca" 
 #   resources :scores, :path => "puntajes"
 
- resources :schedules, :path =>"cartelera"
+  resources :schedules, :path =>"cartelera"
 #   match "/peliculas/filtradas/:state" => "schedules#by_state", :path => "movies_by_state"
 #   resources :movie_characters, :path => "actores"
 #   resources :awards, :path => "premios"

@@ -11,6 +11,8 @@
       = image_tag "unknown.png", :class => "avatar", :title => comment.name, :size => "64x64"
       = comment.name
   .talk
+    - if current_admin
+      = link_to "Eliminar comentario", comment_path(comment), method: :delete, class: "delete", confirm: "Está seguro?"
     %p
       = summary_of(comment.content)
       - if comment.post
