@@ -123,6 +123,7 @@ class User < ActiveRecord::Base
 
   def allowed_to_post?
     self.blog.present? && expert?
+    true
   end
 
   def build_post

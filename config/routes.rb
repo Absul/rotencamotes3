@@ -156,18 +156,18 @@ resources :lists
 
 #  match '/admin/movies/:id/absorb/:similar_id' => "admin/movies", :path => absorb_admin_movie 
   
-#  namespace :member do 
-#     match "/post/search.:format" => "post#search", :path => autocomplete_movies 
-#     match "/post/search_movie.:format" => "post#search_movie", :path  => autocomplete_movie_list
+namespace :member do 
+  match "/post/search.:format" => "posts#search", as: :autocomplete_movies 
+  match "/post/search_movie.:format" => "posts#search_movie", :as  => :autocomplete_movie_list
 
-#     resources :pathsets
-#     resources :blog_images
-#     resources :posts
-#     resources :categories
-#     resources :post_categories
-#     resources :lists, :has_many => :items
-#     resources :blogs
-#   end
+  resources :pathsets
+  resources :blog_images
+  resources :posts
+  resources :categories
+  resources :post_categories
+  resources :lists, :has_many => :items
+  resources :blogs
+end
   
 #   namespace :mobile do 
 #     resources :posts
@@ -193,7 +193,5 @@ resources :lists
 #   match ':controller/:action/:id.:format'
 #   match "/feed" => "home#index", :format => "atom"
 #   match ':acerca/' => 'about#index'
-# end
-
 
 end

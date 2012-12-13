@@ -1,15 +1,17 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# encoding: UTF-8
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110924205558) do
+ActiveRecord::Schema.define(:version => 20121213024823) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -311,6 +313,21 @@ ActiveRecord::Schema.define(:version => 20110924205558) do
     t.datetime "updated_at"
   end
 
+  create_table "plays", :force => true do |t|
+    t.string   "title"
+    t.text     "synopsis"
+    t.text     "cast"
+    t.string   "director"
+    t.string   "author"
+    t.datetime "starting_at"
+    t.datetime "ending_at"
+    t.string   "length"
+    t.string   "cached_tag_list"
+    t.integer  "theatre_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "post_categories", :force => true do |t|
     t.integer  "post_id"
     t.integer  "category_id"
@@ -337,6 +354,7 @@ ActiveRecord::Schema.define(:version => 20110924205558) do
     t.datetime "updated_at"
     t.integer  "movie_id"
     t.text     "headlines"
+    t.integer  "play_id"
   end
 
   create_table "profiles", :force => true do |t|
@@ -376,6 +394,7 @@ ActiveRecord::Schema.define(:version => 20110924205558) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "showtimes"
+    t.integer  "play_id"
   end
 
   create_table "scores", :force => true do |t|

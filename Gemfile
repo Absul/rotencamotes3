@@ -44,15 +44,16 @@ gem 'mapper'
 gem 'devise', "~>2.0.0" #, '~> 1.5.0'
 gem 'oauth2'
 gem 'omniauth-facebook'
+gem 'tinymce-rails'
 
 # gem 'warden'
 # 
-# gem 'formtastic', '~> 1.1.0'
+gem 'formtastic' #, '~> 1.1.0'
 # gem 'will_paginate', '~> 2.3.11'
 gem 'haml'
 
 
-# gem "inherited_resources", "~> 1.0.6"
+gem "inherited_resources" #, "~> 1.0.6"
 # gem 'hoptoad_notifier'
 # gem 'searchlogic'
 # 
