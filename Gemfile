@@ -13,6 +13,10 @@ group :production do
   gem 'pg'
 end
 
+group :assets do
+  gem 'coffee-rails'
+end
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

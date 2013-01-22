@@ -2,7 +2,7 @@
   = f.semantic_errors
   #synopsis.widget
     .top
-    .middle
+    .middle#selectable
       %h3 La opinión
       = f.inputs do
         = f.input :blog_id,       :as => :hidden, :value => @post.blog.id
@@ -12,12 +12,12 @@
       = f.inputs do
         %li.select.input.optional
           %label Tipo de opinión
-          %select#form_type{name: "form_type"}
+          %select#form_type.selector{name: "form_type"}
             %option{value: "movie"} Película
             %option{value: "play"} Obra de teatro
         = f.input :title,   :label => 'Título'
-        = f.input :movie,   :label => 'Película' #, :as => :autocomplete, :url => member_autocomplete_movies_path(:format => :json), :param_name => 'title_begins_with'
-        = f.input :play,   :label => 'Obra de teatro' #, :as => :autocomplete, :url => member_autocomplete_movies_path(:format => :json), :param_name => 'title_begins_with'
+        = f.input :movie,   :label => 'Película', :input_html => {:class => 'selectable movie'} #, :as => :autocomplete, :url => member_autocomplete_movies_path(:format => :json), :param_name => 'title_begins_with'
+        = f.input :play,   :label => 'Obra de teatro', :input_html => {:class => 'selectable play'}, :wrapper_html => {:style => 'display: none;'} #, :as => :autocomplete, :url => member_autocomplete_movies_path(:format => :json), :param_name => 'title_begins_with'
         = f.input :rating,  :label => 'Calificación'
         = f.input :content, :label => 'Contenido',  :as => :text, :input_html => {:class => "tinymce"}
         = f.input :headlines, :as => :text,  :label => 'Sumilla', :input_html => {:rows => "3"}
