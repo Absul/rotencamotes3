@@ -7,7 +7,7 @@ gem 'rails', '~>3.2.0'
 
 #gem 'sqlite3'
 
-gem 'mysql2'
+gem 'mysql2', :group => [:test, :development]
 
 group :production do
   gem 'pg'
