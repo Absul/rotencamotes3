@@ -18,10 +18,10 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: rotencamotes_development
+  database: rotencamotes_production
   pool: 5
   username: root
-  password: 
+  password: daso
   # socket: /var/run/mysqld/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
@@ -31,10 +31,10 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: rotencamotes_test
+  database: rotencamotes_production
   pool: 5
   username: root
-  password:
+  password: daso
   # socket: /var/run/mysqld/mysqld.sock
 
 production:
@@ -42,5 +42,5 @@ production:
   database: rotencamotes_production
   host: localhost
   username: root
-  password: rotencamotes2
+  password: daso
   encoding: utf8
