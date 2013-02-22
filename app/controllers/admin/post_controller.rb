@@ -3,7 +3,7 @@ class Admin::PostsController < InheritedResources::Base
   respond_to    :html, :xml
   actions       :all
 
-  uses_tiny_mce(:options => AppConfig.default_mce_options, :only => [:new, :edit])
+ # uses_tiny_mce(:options => AppConfig.default_mce_options, :only => [:new, :edit])
 
 
   def default_path
