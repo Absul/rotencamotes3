@@ -71,8 +71,8 @@
       .middle
         %h3 
           Ultimo trailer
-          .movie_trailer= truncate(@last.name_with_year,:lenght => 100)
-        = @last.trailers
+          .movie_trailer= truncate(@last.try(:name_with_year), :length => 100)
+        = @last.try(:trailers)
       .bottom
         
 #sidebar

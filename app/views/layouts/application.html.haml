@@ -4,10 +4,13 @@
     %meta{'http-equiv' => 'Content-Type', :content => "text/html; charset=iso-8859-1"}
     %link{ :rel=>"shortcut icon", :href=>"/favicon.ico"}
     = yield :fb_tags
-    = auto_discovery_link_tag :rss, root_rss_path
+    = # auto_discovery_link_tag :rss, root_rss_path
     %title= title
     = #stylesheet_link_tag 'formtastic','formtastic_changes','reset','layout','banner','facebox', '../javascripts/uniform/css/uniform.default','sunny/jquery-ui-1.8.5.custom', :cache => "pepper"
-    = include_stylesheets :pepper, :media => 'all'
+    = # include_stylesheets :pepper, :media => 'all'
+    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
 
 
     /[if IE 6 ]
@@ -61,11 +64,11 @@
                 = link_to('Finalizar sesión', destroy_user_session_path)
             - else
               %p.short
-                = link_to "Regístrate", new_user_registration_path(:back_to => request.request_uri)
+                = link_to "Regístrate", new_user_registration_path(:back_to => request.fullpath)
                 o
-                = link_to('Iniciar sesión', new_user_session_path(:back_to => request.request_uri))
+                = link_to('Iniciar sesión', new_user_session_path(:back_to => request.fullpath))
                 o
-                = link_to_oauth2("user","entra vía facebook")
+                = # link_to_oauth2("user","entra vía facebook")
           - form_tag search_path, :method => :get, :class=>"search" do
             = text_field_tag "search"
             = submit_tag "Buscar", :class=>"submit"
@@ -123,13 +126,13 @@
 
 
 
-    = include_javascripts :sugar
-    = include_javascripts :salt
+    / = include_javascripts :sugar
+    / = include_javascripts :salt
 
     / = javascript_include_tag "jquery",  'jquery-ui-1.8.5.custom.min',"modernizr-1.6.min","jcarousellite_1.0.1.min", "jquery.jtruncate.pack", 'jquery.masonry.min', 'jquery.supersleight', 'facebox'
     / = javascript_include_tag 'uniform/jquery.uniform',"application"
 
-    = javascript_include_tiny_mce_if_used
-    = tiny_mce if using_tiny_mce?
+    / = javascript_include_tiny_mce_if_used
+    / = tiny_mce if using_tiny_mce?
     = yield :extra_javascripts
 

@@ -1,5 +1,5 @@
 Rotencamotes3::Application.routes.draw do
-root :to => "home#index"
+  root :to => "home#index"
 
 #   match "/indexDaso" => "indexDaso"
 #   match "/home_b" => "index_b"  
@@ -8,18 +8,18 @@ root :to => "home#index"
 
 
 #   match "/oscars2011" => "oscars" 
-match "/camoteadas/filter/:filter" => "index#filter_posts"
+  match "/camoteadas/filter/:filter" => "index#filter_posts"
 
 #   resources :lists
 
 #   resources :widgets
-resources :user_movies
-devise_for :users
-#   devise_for :admins
+  resources :user_movies
+  devise_for :users
+  devise_for :admins
 #   match "/about" => "about#index", :path => "acerca" 
 #   resources :scores, :path => "puntajes"
 
- resources :schedules, :path =>"cartelera"
+  resources :schedules, :path =>"cartelera"
 #   match "/peliculas/filtradas/:state" => "schedules#by_state", :path => "movies_by_state"
 #   resources :movie_characters, :path => "actores"
 #   resources :awards, :path => "premios"
@@ -42,7 +42,7 @@ end
 #   resources :external_links
 #   resources :pathsets
 #   resources :studios, :path => "estudios"
-#   resources :movie_chains, :path => "cadenas"
+resources :movie_chains, :path => "cadenas"
 #   resources :theatres, :path => "cines"
 #   resources :profiles, :path => "perfiles"
 resources :users, :path => "usuarios"
@@ -156,18 +156,18 @@ resources :lists
 
 #  match '/admin/movies/:id/absorb/:similar_id' => "admin/movies", :path => absorb_admin_movie 
   
-#  namespace :member do 
-#     match "/post/search.:format" => "post#search", :path => autocomplete_movies 
-#     match "/post/search_movie.:format" => "post#search_movie", :path  => autocomplete_movie_list
+namespace :member do 
+  match "/post/search.:format" => "posts#search", as: :autocomplete_movies 
+  match "/post/search_movie.:format" => "posts#search_movie", :as  => :autocomplete_movie_list
 
-#     resources :pathsets
-#     resources :blog_images
-#     resources :posts
-#     resources :categories
-#     resources :post_categories
-#     resources :lists, :has_many => :items
-#     resources :blogs
-#   end
+  resources :pathsets
+  resources :blog_images
+  resources :posts
+  resources :categories
+  resources :post_categories
+  resources :lists, :has_many => :items
+  resources :blogs
+end
   
 #   namespace :mobile do 
 #     resources :posts
@@ -188,12 +188,10 @@ resources :lists
 #   # map routes
   
 #   match "/sitemap.xml" => "sitemap"
-#   match "/search" => "home#search"
+  match "/search" => "home#search"
 #   match ':controller/:action/:id'
 #   match ':controller/:action/:id.:format'
 #   match "/feed" => "home#index", :format => "atom"
 #   match ':acerca/' => 'about#index'
-# end
-
 
 end

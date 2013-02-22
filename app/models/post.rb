@@ -7,6 +7,7 @@ class Post < ActiveRecord::Base
   belongs_to              :blog, :counter_cache => true
   belongs_to              :user
   belongs_to              :movie
+  belongs_to              :play
   has_many                :post_categories
   has_many                :categories, :through  => :post_categories
   has_many                :comments,   :order    => 'created_at DESC'

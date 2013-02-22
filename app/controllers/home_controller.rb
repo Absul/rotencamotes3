@@ -51,12 +51,12 @@ class	HomeController	<	ApplicationController
 			logger.info	"Por	aqui"
 			wants.html	#	=>
 			wants.js	do
-					render	:update	do	|page|
-						page.replace	"movies_top",	:partial	=>	"banner"	#,	:collection	=>	@movies
-					end
+				render	:update	do	|page|
+					page.replace	"movies_top",	:partial	=>	"banner"	#,	:collection	=>	@movies
+				end
 			end
 			wants.atom	{	logger.info	"Cae	por	acá"	}
-			end
+		end
 	end
 
 	def	search
@@ -72,9 +72,8 @@ class	HomeController	<	ApplicationController
 		end
 		render	:update	do	|page|
 			page.replace_html	"post_collection",	:partial	=>	"home/posts"
-			page	<<	'$(".loader").hide();
-'		end
-
+			page	<<	'$(".loader").hide();'
+		end
 	end
 	
 	def	indexDaso

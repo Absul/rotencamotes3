@@ -3,6 +3,7 @@ class Schedule < ActiveRecord::Base
   # relationships
   belongs_to            :theatre
   belongs_to            :movie
+  belongs_to            :play
   #has_many              :showtimes
   # validations
   validates_presence_of :in_theatre_from

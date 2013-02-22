@@ -3471,3 +3471,9 @@ padding-left: 15px;
 #recomendation #recomendation_submit{
   width:50px;
 }
+
+.delete {
+	color: rgb(200, 50, 50);
+	display: block;
+	margin: 10px;
+}

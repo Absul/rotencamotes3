@@ -1,16 +1,20 @@
 source 'http://rubygems.org'
 
-gem 'rails', '~>3.1.0'
+gem 'rails', '~>3.2.0'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 #gem 'sqlite3'
 
-gem 'mysql2'
+gem 'mysql2', :group => [:test, :development]
 
 group :production do
   gem 'pg'
+end
+
+group :assets do
+  gem 'coffee-rails'
 end
 
 # Use unicorn as the web server
@@ -44,15 +48,16 @@ gem 'mapper'
 gem 'devise', "~>2.0.0" #, '~> 1.5.0'
 gem 'oauth2'
 gem 'omniauth-facebook'
+gem 'tinymce-rails'
 
 # gem 'warden'
 # 
-# gem 'formtastic', '~> 1.1.0'
+gem 'formtastic' #, '~> 1.1.0'
 # gem 'will_paginate', '~> 2.3.11'
 gem 'haml'
 
 
-# gem "inherited_resources", "~> 1.0.6"
+gem "inherited_resources" #, "~> 1.0.6"
 # gem 'hoptoad_notifier'
 # gem 'searchlogic'
 # 

@@ -11,6 +11,8 @@
       = image_tag "unknown.png", :class => "avatar", :title => comment.name, :size => "64x64"
       = comment.name
   .talk
+    - if current_admin
+      = link_to "Eliminar comentario", comment_path(comment), method: :delete, class: "delete", confirm: "Está seguro?"
     %p
       = summary_of(comment.content)
       - if comment.post
@@ -21,12 +23,12 @@
   %p.posted
     - if comment.post
       Respuesta a
-      = link_to truncate(comment.post.title, :lenght => 40), post_path(comment.post)
+      = link_to truncate(comment.post.title, :length => 40), post_path(comment.post)
       ,
       = link_to "hace #{distance_of_time_in_words_to_now(comment.created_at)}", post_path(comment.post, :anchor => "comment_#{comment.id}")
     - elsif comment.movie
       Sobre
-      = link_to truncate(comment.movie.title, :lenght => 40), movie_path(comment.movie)
+      = link_to truncate(comment.movie.title, :length => 40), movie_path(comment.movie)
       ,
       = link_to "hace #{distance_of_time_in_words_to_now(comment.created_at)}" , movie_path(comment.movie, :anchor => "comment_#{comment.id}")
       
