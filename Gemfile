@@ -53,7 +53,7 @@ gem 'tinymce-rails'
 # gem 'warden'
 # 
 gem 'formtastic' #, '~> 1.1.0'
-gem 'will_paginate', '~> 2.3.11'
+gem 'will_paginate'#, '~> 2.3.11'
 gem 'haml'
 
 
