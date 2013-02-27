@@ -111,7 +111,7 @@ class Movie < ActiveRecord::Base
 
   scope :on_theatres,
               :select     => 'distinct movies.*',
-              :conditions =>  DB_time.new.time_diff('schedules.created_at', '(select schedules.created_at from schedules order by created_at desc limit 1)') + "= 0",
+              :conditions =>  DB_time.new.time_diff('schedules.created_at', '(select schedules.created_at from schedules order by created_at desc limit 1)') + '= 0',
               :joins      => :schedules,
               :order => "schedules.id DESC"
 
@@ -134,7 +134,7 @@ class Movie < ActiveRecord::Base
                 {:order => "updated_at DESC", :limit => limit}
               }
 
-  scope :with_trailer, :conditions => 'trailers is not null and trailers not like ""'
+  scope :with_trailer, :conditions => "trailers is not null and trailers not like ''"
     
   after_save :update_plain_fields
   
