@@ -41,6 +41,9 @@ class Schedule < ActiveRecord::Base
                 }
 
                 }
+
+sql = DB_time.new.time_diff('created_at', '(select created_at from schedules order by created_at desc limit 1)')
+
   # methods
   def activate
     self.status = STATUSES[:active]
@@ -66,28 +69,28 @@ class Schedule < ActiveRecord::Base
   end
 
   def self.scheduled_movies
-    sql = DB_time.new.time_diff('created_at', '(select created_at from schedules order by created_at desc limit 1)')
+    
     Movie.find_by_sql(
       "select movies.* from movies where id in (select movie_id from schedules where #{sql} = 0 group by movie_id) order by created_at DESC")
   end
   
   def self.scheduled_movies_from_state(state)
     Movie.find_by_sql(
-      ['select movies.* from movies join schedules on movies.id = schedules.movie_id join theatres on theatres.id = schedules.theatre_id where DATEDIFF(schedules.created_at,(select created_at from schedules order by created_at desc limit 1)) = 0 and theatres.state like ? group by movie_id order by movies.created_at DESC',state])    
+      ['select movies.* from movies join schedules on movies.id = schedules.movie_id join theatres on theatres.id = schedules.theatre_id where #{sql} = 0 and theatres.state like ? group by movie_id order by movies.created_at DESC',state])    
   end
 
   def self.scheduled_movies_from_city(city)
     Movie.find_by_sql(
-      ['select movies.* from movies where id in (select movie_id from schedules join theatres on theatres.id = schedules.theatre_id where DATEDIFF(schedules.created_at,(select created_at from schedules order by created_at desc limit 1)) = 0 and theatres.city like ? group by movie_id) order by created_at DESC',city])    
+      ['select movies.* from movies where id in (select movie_id from schedules join theatres on theatres.id = schedules.theatre_id where #{sql} = 0 and theatres.city like ? group by movie_id) order by created_at DESC',city])    
   end
 
   def self.scheduled_movies_from_now
-    Movie.find_by_sql("select movies.* from movies join schedules on movies.id = schedules.movie_id where DATEDIFF(schedules.created_at,(select created_at from schedules order by created_at desc limit 1)) = 0 group by movie_id order by final_score desc")
+    Movie.find_by_sql("select movies.* from movies join schedules on movies.id = schedules.movie_id where #{sql} = 0 group by movie_id order by final_score desc")
   end
 
   def self.scheduled_movie_chains_for_movie movie_id
     MovieChain.find_by_sql([
-      'select * from movie_chains where id in (select movie_chain_id from theatres where id in (select theatre_id from schedules where DATEDIFF(created_at,(select created_at from schedules order by created_at desc limit 1)) = 0 and movie_id = ?))', movie_id])
+      'select * from movie_chains where id in (select movie_chain_id from theatres where id in (select theatre_id from schedules where #{sql} = 0 and movie_id = ?))', movie_id])
   end
 
   def self.scheduled_theatres_for_movie movie_id
