@@ -2,6 +2,10 @@
 require 'nokogiri'
 
 class Movie < ActiveRecord::Base
+
+ # include ::DB_time
+
+
   has_attached_file :banner, :styles => { :medium => "300x300>", :thumb => "100x100>", :banner => "150x222#", :scheduled => "65x97#" }, :storage => :s3,
                     :s3_credentials => { :access_key_id => "1B7JJ1RZXMZP7VQADY02" , :secret_access_key =>"8UvZq1RtsyE72t0vq2U1FaaZStGXm9fj87uFub2b" },
                     :path => "system/:attachment/:id/:style/:basename.:extension",
@@ -31,6 +35,7 @@ class Movie < ActiveRecord::Base
   belongs_to :user
   has_many :items, :as => :listable
   has_many :recomendations
+
 
   MPAA_RATES = {
     :NR     => 'NR- This Film is Not Yet Rated',
@@ -106,7 +111,7 @@ class Movie < ActiveRecord::Base
 
   scope :on_theatres,
               :select     => 'distinct movies.*',
-              :conditions =>  "DATEDIFF(schedules.created_at,(select schedules.created_at from schedules order by created_at desc limit 1)) = 0",
+              :conditions =>  DB_time.new.time_diff('schedules.created_at', '(select schedules.created_at from schedules order by created_at desc limit 1)') + "= 0",
               :joins      => :schedules,
               :order => "schedules.id DESC"
 

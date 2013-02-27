@@ -17,10 +17,10 @@ class Schedule < ActiveRecord::Base
 
   # named scopes
   scope :active,
-              :conditions =>  "DATEDIFF(created_at,(select created_at from schedules order by created_at desc limit 1)) = 0"
+              :conditions =>  DB_time.new.time_diff('created_at', '(select created_at from schedules order by created_at desc limit 1)') + "= 0"
               
   scope :inactive,
-              :conditions =>  "DATEDIFF(created_at,(select created_at from schedules order by created_at desc limit 1)) < 0"
+              :conditions =>  DB_time.new.time_diff('created_at', '(select created_at from schedules order by created_at desc limit 1)') + "< 0"
   scope :from_theatre,
                 lambda  { |theatre_id|  {
                   :conditions =>  { :theatre_id => theatre_id },
@@ -66,8 +66,9 @@ class Schedule < ActiveRecord::Base
   end
 
   def self.scheduled_movies
+    sql = DB_time.new.time_diff('created_at', '(select created_at from schedules order by created_at desc limit 1)')
     Movie.find_by_sql(
-      'select movies.* from movies where id in (select movie_id from schedules where DATEDIFF(created_at,(select created_at from schedules order by created_at desc limit 1)) = 0 group by movie_id) order by created_at DESC')
+      "select movies.* from movies where id in (select movie_id from schedules where #{sql} = 0 group by movie_id) order by created_at DESC")
   end
   
   def self.scheduled_movies_from_state(state)
