@@ -95,7 +95,7 @@ class Schedule < ActiveRecord::Base
 
   def self.scheduled_theatres_for_movie movie_id
     Theatre.find_by_sql([
-      'select * from theatres where id in (select theatre_id from schedules where'+@sql+'= 0 and movie_id = ?) order by name", movie_id])
+      'select * from theatres where id in (select theatre_id from schedules where'+@sql+'= 0 and movie_id = ?) order by name', movie_id])
   end
 end
 
