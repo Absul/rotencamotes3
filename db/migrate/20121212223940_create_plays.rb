@@ -14,6 +14,6 @@ class CreatePlays < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_column :schedules, :play_id, :integer
+    #add_column :schedules, :play_id, :integer
   end
 end

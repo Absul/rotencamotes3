@@ -11,9 +11,6 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 0) do
-=======
 ActiveRecord::Schema.define(:version => 20121213024823) do
 
   create_table "activities", :force => true do |t|
@@ -563,6 +560,6 @@ ActiveRecord::Schema.define(:version => 20121213024823) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
->>>>>>> 13b5d4c441a0b60154e7bb2839598261afb497c9
+
 
 end
