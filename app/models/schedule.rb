@@ -85,7 +85,7 @@ class Schedule < ActiveRecord::Base
   end
 
   def self.scheduled_movies_from_now
-    Movie.find_by_sql("select movies.* from movies join schedules on movies.id = schedules.movie_id where #{@sql} = 0 order by final_score desc group by movie_id")
+    Movie.find_by_sql("select movies.* from movies join schedules on movies.id = schedules.movie_id where #{@sql} = 0 group by movies.id order by final_score desc")
   end
 
   def self.scheduled_movie_chains_for_movie movie_id
