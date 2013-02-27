@@ -42,7 +42,7 @@ class Schedule < ActiveRecord::Base
 
                 }
 
- @sql = DB_time.new.time_diff('created_at', '(select created_at from schedules order by created_at desc limit 1)')
+ @sql = DB_time.new.time_diff('schedules.created_at', '(select created_at from schedules order by created_at desc limit 1)')
 
   # methods
   def activate
