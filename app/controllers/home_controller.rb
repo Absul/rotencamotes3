@@ -38,7 +38,7 @@ class	HomeController	<	ApplicationController
 		#@schedules	=	[]
 		@comments	=	Comment.last_published(15).find(:all,	:include	=>	[:user,:movie,:post])
 		@categories	=	Category.with_posts
-		@activities	=	Activity.find(:all,	:limit	=>	8,	:order	=>	"created_at	DESC",	:group	=>	"item_id")
+		@activities	=	Activity.find(:all,	:limit	=>	8,	:order	=>	"created_at	DESC")
     @lists = List.find(:all, :limit => 5, :order => "created_at DESC")
     
 	end
