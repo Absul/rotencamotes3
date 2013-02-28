@@ -372,8 +372,8 @@ class Movie < ActiveRecord::Base
     @doc ||= Nokogiri::HTML(self.trailers)
   end
 
-  def self.on_theatres
-    Schedule.from_last_day_available.collect {|schedule| schedule.movie}.uniq
+ def self.on_theatres
+    Schedule.from_last_day_available.collect {|schedule| schedule.movie}.uniq.compact!
   end
 
 end
