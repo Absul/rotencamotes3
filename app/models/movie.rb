@@ -109,11 +109,11 @@ class Movie < ActiveRecord::Base
                 }
               }
 
-  scope :on_theatres,
-              :select     => 'distinct movies.*',
-              :conditions =>  DB_time.new.time_diff('schedules.created_at', '(select schedules.created_at from schedules order by created_at desc limit 1)') + '= 0',
-              :joins      => :schedules,
-              :order => "schedules.id DESC"
+  # scope :on_theatres,
+  #             :select     => 'distinct movies.*',
+  #             :conditions =>  DB_time.new.time_diff('schedules.created_at', '(select schedules.created_at from schedules order by created_at desc limit 1)') + '= 0',
+  #             :joins      => :schedules,
+  #             :order => "schedules.id DESC"
 
 
   scope :recommended,
@@ -239,6 +239,8 @@ class Movie < ActiveRecord::Base
       return result.empty? ? 0.0 : result.first.value.to_f
     end
   end
+
+
 
   def calculate_final_score
       Score.calculate_final_score(self.id, self.score_from_community, self.score_from_experts)
@@ -368,6 +370,10 @@ class Movie < ActiveRecord::Base
 
   def doc
     @doc ||= Nokogiri::HTML(self.trailers)
+  end
+
+  def self.on_theatres
+    Schedule.from_last_day_available.collect {|schedule| schedule.movie}.uniq
   end
 
 end
