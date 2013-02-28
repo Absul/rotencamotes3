@@ -98,10 +98,12 @@ class Schedule < ActiveRecord::Base
       'select * from theatres where id in (select theatre_id from schedules where'+@sql+'= 0 and movie_id = ?) order by name', movie_id])
   end
 
-   def self.from_last_day_available
-    date = Schedule.last.created_at.beginning_of_day
+
+  def self.from_last_day_available
+    date = Schedule.last.created_at
     Schedule.where(created_at: date.beginning_of_day..date.end_of_day)
   end
+
 end
 
 
