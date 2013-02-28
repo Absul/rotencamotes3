@@ -373,7 +373,7 @@ class Movie < ActiveRecord::Base
   end
 
  def self.on_theatres
-    Schedule.from_last_day_available.collect {|schedule| schedule.movie}.uniq.compact!
+    Schedule.from_last_day_available.collect {|schedule| schedule.movie}.uniq.compact
   end
 
 end
